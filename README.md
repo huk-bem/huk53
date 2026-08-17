@@ -10,19 +10,35 @@ Veröffentlicht via GitHub Pages: https://huk-bem.github.io/huk53/
 ## Struktur
 
 ```
-index.html              Seite (Hero, Songs, About, Booking, Footer)
+index.html              Startseite (Hero, Songs, About, Booking, Footer)
+impressum.html          Impressum (Platzhalter für Firmendaten, siehe unten)
+datenschutz.html        Datenschutzerklärung
 assets/css/style.css    Design (Dark/Neon, minimal & poppig)
+assets/css/legal.css    Zusatzstyles für Impressum/Datenschutz
 assets/js/main.js       Player, Likes/Kommentare (localStorage), Animationen
-assets/audio/           Ablageort für die echten MP3-Dateien (siehe README dort)
+assets/audio/           MP3-Dateien (siehe README dort für Status pro Track)
 ```
 
 ## Songs austauschen
 
 Track-Titel, Genre, BPM sowie die Startwerte für Likes/Kommentare stehen
-im `SONGS`-Array oben in `assets/js/main.js`. Solange unter
-`assets/audio/<name>.mp3` keine Datei liegt, spielt der Player automatisch
-eine kurze synthetisierte Vorschau-Loop im Track-BPM ab — die Seite ist
-also sofort funktionsfähig, auch ohne fertige Audiodateien.
+im `SONGS`-Array oben in `assets/js/main.js`. Aktuell live: **„Back on
+Track"** und **„Sonar"** (`assets/audio/back-on-track.mp3` /
+`sonar.mp3`). Der dritte Slot „Night Pulse" ist noch ein Platzhalter und
+spielt bis zum Hochladen einer echten Datei eine kurze synthetisierte
+Vorschau-Loop im Track-BPM ab. `bpm`/`genre` der beiden echten Tracks sind
+grobe Schätzwerte — bei Bedarf in `main.js` auf die echten Werte anpassen.
+
+## Impressum & Datenschutz
+
+`impressum.html` und `datenschutz.html` sind verlinkt im Footer jeder
+Seite. Die technischen Abschnitte in `datenschutz.html` (Hosting via
+GitHub Pages, Google Fonts, localStorage für Likes/Kommentare, mailto-
+Booking-Formular) beschreiben bereits korrekt, wie die Seite tatsächlich
+funktioniert. **Vor dem echten Livegang unbedingt ausfüllen:** alle
+`[Platzhalter]`-Stellen in beiden Dateien mit den rechtsverbindlichen
+Angaben des Studios (Name/Rechtsform, Anschrift, Kontakt) — ein
+unvollständiges Impressum ist in Deutschland abmahnfähig.
 
 ## Feedback-Spalte (Likes & Kommentare)
 

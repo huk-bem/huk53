@@ -15,38 +15,43 @@
    * falls back to a short synthesized preview loop tuned to the track's
    * BPM, so the demo is fully playable out of the box. Max 3 tracks by
    * design — add a 4th here only if you also relax that constraint.
+   *
+   * "Back on Track" and "Sonar" are live (assets/audio/back-on-track.mp3,
+   * assets/audio/sonar.mp3). Their `bpm`/`genre` below are placeholder
+   * estimates — adjust to the real values, they only affect the tag chip
+   * and the (unused, since a real file exists) demo-loop fallback tempo.
    * ------------------------------------------------------------------ */
   const SONGS = [
     {
-      id: "night-pulse",
-      title: "Night Pulse",
-      genre: "Dance / Electro",
-      bpm: 128,
-      audioSrc: "assets/audio/night-pulse.mp3",
-      baseLikes: 128,
+      id: "back-on-track",
+      title: "Back on Track",
+      genre: "Dance",
+      bpm: 126,
+      audioSrc: "assets/audio/back-on-track.mp3",
+      baseLikes: 142,
       seedComments: [
         { name: "Mira", text: "Der Drop bei 1:10 killt live jedes Mal.", date: "2026-07-02" },
         { name: "Jonas", text: "Perfekt für den Openslot, sofort Energie im Raum.", date: "2026-07-14" },
       ],
     },
     {
-      id: "neon-rush",
-      title: "Neon Rush",
+      id: "sonar",
+      title: "Sonar",
       genre: "Dance / Techno",
-      bpm: 132,
-      audioSrc: "assets/audio/neon-rush.mp3",
-      baseLikes: 94,
+      bpm: 130,
+      audioSrc: "assets/audio/sonar.mp3",
+      baseLikes: 118,
       seedComments: [
         { name: "Elif", text: "Bassline ist brutal gut abgemischt.", date: "2026-06-28" },
       ],
     },
     {
-      id: "overdrive",
-      title: "Overdrive",
-      genre: "Dance / House",
-      bpm: 126,
-      audioSrc: "assets/audio/overdrive.mp3",
-      baseLikes: 156,
+      id: "night-pulse",
+      title: "Night Pulse",
+      genre: "Dance / Electro",
+      bpm: 128,
+      audioSrc: "assets/audio/night-pulse.mp3",
+      baseLikes: 96,
       seedComments: [
         { name: "Timo", text: "Läuft bei uns seit Wochen im Closing-Set.", date: "2026-07-20" },
         { name: "Sana", text: "Groove ist unfassbar tight 🔥", date: "2026-08-01" },

@@ -1,0 +1,88 @@
+/* ==========================================================================
+   HUK53 — Legal pages (Impressum / Datenschutz)
+   Shares tokens + nav/footer/section styles from style.css.
+   ========================================================================== */
+
+.legal {
+  padding-top: clamp(7rem, 12vw, 9rem);
+  padding-bottom: 4rem;
+  min-height: 60vh;
+}
+
+.legal__inner {
+  max-width: 720px;
+}
+
+.legal h1 {
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  margin-bottom: 0.5rem;
+}
+
+.legal__intro {
+  color: var(--text-dim);
+  margin-bottom: 2rem;
+}
+
+.legal__todo {
+  background: rgba(255, 214, 10, 0.08);
+  border: 1px solid rgba(255, 214, 10, 0.35);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--text-dim);
+  margin-bottom: 2.5rem;
+}
+
+.legal__todo code {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+.legal section {
+  padding: 1.75rem 0;
+  border-top: 1px solid var(--card-border);
+}
+
+.legal section:first-of-type {
+  border-top: none;
+}
+
+.legal h2 {
+  font-size: 1.15rem;
+  margin-bottom: 0.75rem;
+}
+
+.legal p,
+.legal li {
+  color: var(--text-dim);
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+.legal ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.legal a {
+  color: var(--cyan);
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 229, 255, 0.35);
+  text-underline-offset: 2px;
+}
+.legal a:hover { text-decoration-color: currentColor; }
+
+.footer__legal {
+  display: flex;
+  gap: 1.25rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+.footer__legal a:hover { color: var(--pink); }
