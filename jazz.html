@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jazz — HUK53</title>
+<meta name="description" content="Fünf Jazz-Stücke aus dem HUK53-Studio. 30 Sekunden anspielen, danach weiterhören auf Apple Music oder Spotify." />
+<meta name="theme-color" content="#0b0b14" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%230b0b14'/%3E%3Ctext x='50' y='66' font-size='46' font-family='Arial,sans-serif' font-weight='700' fill='%23e8a13c' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="assets/css/style.css" />
+<link rel="stylesheet" href="assets/css/jazz.css" />
+</head>
+<body>
+
+<!-- ============================== NAV ============================== -->
+<header class="nav" id="nav">
+  <a href="index.html" class="nav__logo"><span class="dot" aria-hidden="true"></span>HUK53</a>
+  <nav class="nav__links" id="navLinks">
+    <a href="index.html#songs">Tracks</a>
+    <a href="jazz.html" class="nav__cta">Jazz</a>
+    <a href="index.html#about">Studio</a>
+    <a href="index.html#booking">Booking</a>
+  </nav>
+  <button class="nav__burger" id="navBurger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navLinks">
+    <span></span>
+  </button>
+</header>
+
+<!-- ============================== JAZZ HERO ============================== -->
+<section class="jazz-hero">
+  <div class="container jazz-hero__inner">
+    <span class="section__kicker">Anderer Vibe</span>
+    <h1>Fünf Jazz-Stücke</h1>
+    <p>Ruhiger als der Dancefloor: eine kleine Jazz-Auswahl aus dem HUK53-Studio. Jedes Stück läuft 30 Sekunden als Vorschau — danach kannst du auf Apple Music oder Spotify weiterhören.</p>
+  </div>
+</section>
+
+<!-- ============================== JAZZ GRID ============================== -->
+<section>
+  <div class="container">
+    <div class="jazz-grid" id="jazzGrid">
+      <!-- Jazz cards are rendered by assets/js/jazz.js from the JAZZ_TRACKS config -->
+    </div>
+  </div>
+</section>
+
+<!-- ============================== FOOTER ============================== -->
+<footer>
+  <div class="container footer__row">
+    <span class="footer__logo">HUK53</span>
+    <small>© <span id="year"></span> HUK53 Studio · Gig-geladene Dance-Musik</small>
+    <nav class="footer__legal">
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="impressum.html">Impressum</a>
+    </nav>
+    <a href="index.html#top" class="back-to-top">↑ zur Startseite</a>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/jazz.js"></script>
+</body>
+</html>

@@ -1,0 +1,233 @@
+/* ==========================================================================
+   HUK53 — Jazz page + homepage promo
+   Warmer amber/gold accent layered on top of the base dark theme, to give
+   the jazz selection its own mood without breaking brand consistency.
+   ========================================================================== */
+
+:root {
+  --gold: #e8a13c;
+  --gold-soft: #ffd18a;
+}
+
+/* ---- Homepage promo banner --------------------------------------------- */
+
+.jazz-promo {
+  padding-block: clamp(3rem, 6vw, 4.5rem);
+}
+
+.jazz-promo__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  background: linear-gradient(135deg, rgba(232, 161, 60, 0.14), rgba(123, 47, 247, 0.08));
+  border: 1px solid rgba(232, 161, 60, 0.3);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+}
+
+.jazz-promo__kicker { color: var(--gold) !important; }
+
+.jazz-promo__text h2 {
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  margin: 0.5rem 0 0.6rem;
+}
+
+.jazz-promo__text p {
+  color: var(--text-dim);
+  max-width: 46ch;
+  line-height: 1.6;
+}
+
+.btn--jazz {
+  background: linear-gradient(120deg, var(--gold), var(--gold-soft));
+  color: #241605;
+  box-shadow: 0 8px 26px rgba(232, 161, 60, 0.3);
+  flex: none;
+}
+.btn--jazz:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(232, 161, 60, 0.4); }
+
+/* ---- Jazz page header ---------------------------------------------------- */
+
+.jazz-hero {
+  padding: clamp(7rem, 12vw, 9rem) 0 clamp(2.5rem, 5vw, 4rem);
+  text-align: center;
+}
+
+.jazz-hero__inner { max-width: 640px; margin-inline: auto; }
+
+.jazz-hero .section__kicker { color: var(--gold); }
+
+.jazz-hero h1 {
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  margin: 0.6rem 0 1rem;
+}
+
+.jazz-hero p {
+  color: var(--text-dim);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+/* ---- Jazz track grid ------------------------------------------------------ */
+
+.jazz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding-bottom: clamp(4rem, 8vw, 6rem);
+}
+
+.jazz-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.4rem, 3vw, 1.85rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.jazz-card.is-playing {
+  border-color: transparent;
+  box-shadow: 0 0 0 2px var(--gold), 0 0 60px rgba(232, 161, 60, 0.25);
+}
+
+.jazz-card__top {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.jazz-card__art {
+  flex: none;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: conic-gradient(from 90deg, var(--gold), var(--purple), var(--cyan), var(--gold));
+  display: grid;
+  place-items: center;
+  animation: spin-record 6s linear infinite paused;
+}
+.jazz-card.is-playing .jazz-card__art { animation-play-state: running; }
+
+.jazz-card__art::before {
+  content: "";
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 3px solid rgba(255,255,255,0.15);
+}
+
+.jazz-card__meta h3 { font-size: 1.2rem; font-weight: 700; }
+
+.jazz-card__tags { margin-top: 0.35rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+.tag--gold { color: var(--gold); background: rgba(232, 161, 60, 0.12); }
+
+.jazz-card__controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.jazz-card .play-btn {
+  background: linear-gradient(120deg, var(--gold), var(--purple));
+}
+
+.jazz-card .play-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.jazz-card__progress-wrap { flex: 1; min-width: 0; }
+
+.jazz-card__progress {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.jazz-card__progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-soft));
+  border-radius: 999px;
+  transition: width 0.2s linear;
+}
+
+.jazz-card__times {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: var(--text-faint);
+  margin-top: 0.4rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.jazz-card .waveform span { background: var(--gold-soft); }
+.jazz-card.is-playing .waveform span { background: var(--gold); animation: wave-bounce 0.9s ease-in-out infinite; }
+
+.jazz-card__note {
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  line-height: 1.5;
+}
+
+/* ---- Post-preview streaming links ---------------------------------------- */
+
+.jazz-card__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s var(--ease), opacity 0.3s var(--ease);
+}
+
+.jazz-card__links.is-visible {
+  max-height: 200px;
+  opacity: 1;
+}
+
+.jazz-card__links-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.jazz-card__link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+.stream-btn {
+  flex: 1;
+  min-width: 130px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  border: 1px solid var(--card-border);
+  transition: transform 0.15s var(--ease), border-color 0.2s;
+}
+.stream-btn:hover { transform: translateY(-2px); }
+
+.stream-btn--apple { background: #fff; color: #111; }
+.stream-btn--apple:hover { border-color: #fff; }
+
+.stream-btn--spotify { background: #1ed760; color: #06210f; }
+.stream-btn--spotify:hover { border-color: #1ed760; }
+
+@media (max-width: 760px) {
+  .jazz-promo__inner { flex-direction: column; align-items: flex-start; }
+  .btn--jazz { align-self: flex-start; }
+}

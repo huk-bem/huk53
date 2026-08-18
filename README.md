@@ -11,11 +11,14 @@ Veröffentlicht via GitHub Pages: https://huk-bem.github.io/huk53/
 
 ```
 index.html              Startseite (Hero, Songs, About, Booking, Footer)
+jazz.html                Jazz-Seite: 5 Stücke, 30s-Vorschau, Apple Music/Spotify
 impressum.html          Impressum (Platzhalter für Firmendaten, siehe unten)
 datenschutz.html        Datenschutzerklärung
 assets/css/style.css    Design (Dark/Neon, minimal & poppig)
+assets/css/jazz.css     Zusatzstyles für die Jazz-Seite (warmer Gold-Akzent)
 assets/css/legal.css    Zusatzstyles für Impressum/Datenschutz
 assets/js/main.js       Player, Likes/Kommentare (localStorage), Animationen
+assets/js/jazz.js       Jazz-Player mit hartem 30s-Vorschau-Limit
 assets/audio/           MP3-Dateien (siehe README dort für Status pro Track)
 ```
 
@@ -28,6 +31,19 @@ Track"** und **„Sonar"** (`assets/audio/back-on-track.mp3` /
 spielt bis zum Hochladen einer echten Datei eine kurze synthetisierte
 Vorschau-Loop im Track-BPM ab. `bpm`/`genre` der beiden echten Tracks sind
 grobe Schätzwerte — bei Bedarf in `main.js` auf die echten Werte anpassen.
+
+## Jazz-Seite
+
+`jazz.html` (verlinkt im Nav aller Seiten + Promo-Banner auf der
+Startseite) zeigt fünf Jazz-Stücke aus dem `JAZZ_TRACKS`-Array in
+`assets/js/jazz.js`. Jede Vorschau ist **hart auf 30 Sekunden gedeckelt**
+— danach stoppt die Wiedergabe endgültig (kein erneutes Abspielen mehr auf
+dieser Seitenladung) und zwei Buttons erscheinen: **Apple Music** und
+**Spotify**, mit den Links aus `appleUrl`/`spotifyUrl` je Track. Beide
+Linkfelder sind aktuell Platzhalter (`https://music.apple.com/` bzw.
+`https://open.spotify.com/`) — bitte durch die echten Track-Links
+ersetzen. Ohne echte MP3s (siehe `assets/audio/README.md`) läuft
+stattdessen eine sanfte, synthetisierte Vorschau-Loop.
 
 ## Impressum & Datenschutz
 
