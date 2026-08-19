@@ -13,25 +13,23 @@
    * Replace `audioSrc` with a real file (e.g. "assets/audio/track-1.mp3")
    * to go live. Until a file exists at that path, the player automatically
    * falls back to a short synthesized preview loop tuned to the track's
-   * BPM, so the demo is fully playable out of the box. Max 3 tracks by
-   * design — add a 4th here only if you also relax that constraint.
+   * BPM, so the demo is fully playable out of the box.
    *
-   * "Back on Track" and "Sonar" are live (assets/audio/back-on-track.mp3,
-   * assets/audio/sonar.mp3). Their `bpm`/`genre` below are placeholder
+   * All six tracks below are live. `bpm`/`genre` are placeholder
    * estimates — adjust to the real values, they only affect the tag chip
-   * and the (unused, since a real file exists) demo-loop fallback tempo.
+   * and the (unused, since real files exist) demo-loop fallback tempo.
    * ------------------------------------------------------------------ */
   const SONGS = [
     {
       id: "back-on-track",
       title: "Back on Track",
-      genre: "Dance",
+      genre: "Dance / EDM",
       bpm: 126,
       audioSrc: "assets/audio/back-on-track.mp3",
       baseLikes: 142,
       seedComments: [
-        { name: "Mira", text: "Der Drop bei 1:10 killt live jedes Mal.", date: "2026-07-02" },
-        { name: "Jonas", text: "Perfekt für den Openslot, sofort Energie im Raum.", date: "2026-07-14" },
+        { name: "Mira", text: "Der Drop bei 1:10 ist richtig clean produziert.", date: "2026-07-02" },
+        { name: "Jonas", text: "Mix hat viel Punch, bleibt sofort im Kopf hängen.", date: "2026-07-14" },
       ],
     },
     {
@@ -46,15 +44,47 @@
       ],
     },
     {
-      id: "night-pulse",
-      title: "Night Pulse",
-      genre: "Dance / Electro",
-      bpm: 128,
-      audioSrc: "assets/audio/night-pulse.mp3",
-      baseLikes: 96,
+      id: "pocket-of-rain",
+      title: "Pocket of Rain",
+      genre: "EDM / Fusion",
+      bpm: 124,
+      audioSrc: "assets/audio/pocket-of-rain.mp3",
+      baseLikes: 101,
       seedComments: [
-        { name: "Timo", text: "Läuft bei uns seit Wochen im Closing-Set.", date: "2026-07-20" },
-        { name: "Sana", text: "Groove ist unfassbar tight 🔥", date: "2026-08-01" },
+        { name: "Noah", text: "Die Fusion-Elemente in der Bridge sind richtig spannend.", date: "2026-08-05" },
+      ],
+    },
+    {
+      id: "jump",
+      title: "Jump",
+      genre: "Dance / EDM",
+      bpm: 128,
+      audioSrc: "assets/audio/jump.mp3",
+      baseLikes: 87,
+      seedComments: [
+        { name: "Lea", text: "Sofort tanzbar, toller Groove.", date: "2026-08-09" },
+      ],
+    },
+    {
+      id: "new-world",
+      title: "New World",
+      genre: "EDM / Crossover",
+      bpm: 122,
+      audioSrc: "assets/audio/new-world.mp3",
+      baseLikes: 76,
+      seedComments: [
+        { name: "Kim", text: "Crossover-Sound trifft's genau, sehr eigenständig.", date: "2026-08-12" },
+      ],
+    },
+    {
+      id: "pulp-random-roll-it-out",
+      title: "Pulp Random Roll It Out",
+      genre: "Dance / Fusion",
+      bpm: 132,
+      audioSrc: "assets/audio/pulp-random-roll-it-out.mp3",
+      baseLikes: 64,
+      seedComments: [
+        { name: "Aylin", text: "Ungewöhnlicher Titel, aber der Track groovt richtig.", date: "2026-08-15" },
       ],
     },
   ];
@@ -505,24 +535,7 @@
   }
 
   /* ------------------------------------------------------------------ *
-   * 6) BOOKING — mailto handoff (no backend attached yet)
-   * ------------------------------------------------------------------ */
-  const bookingForm = document.getElementById("bookingForm");
-  bookingForm?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const name = bookingForm.elements.name.value.trim();
-    const date = bookingForm.elements.date.value;
-    const message = bookingForm.elements.message.value.trim();
-    const subject = encodeURIComponent(`Gig-Anfrage: ${name}`);
-    const body = encodeURIComponent(
-      `Name/Location: ${name}\nDatum: ${date || "–"}\n\n${message}`
-    );
-    // TODO: replace with the studio's real booking address.
-    window.location.href = `mailto:booking@huk53.de?subject=${subject}&body=${body}`;
-  });
-
-  /* ------------------------------------------------------------------ *
-   * 7) FOOTER — current year
+   * 6) FOOTER — current year
    * ------------------------------------------------------------------ */
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();

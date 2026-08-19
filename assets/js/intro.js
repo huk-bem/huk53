@@ -5,10 +5,11 @@
    WHAT THIS DOES
    When active, the page tries to autoplay a soundtrack on load (looping)
    while the existing animated hero background (assets/js/main.js, the
-   canvas blob motif) plays as the visual "Motiv". A small floating mute
-   button appears so visitors can turn the sound off — that control is
-   always visible once audio is running; only the ON/OFF *decision* is
-   hidden behind the secret trigger below.
+   canvas blob motif) plays as the visual "Motiv". A small floating sound
+   button appears immediately — before playback even starts — so every
+   visitor has a direct, always-available way to turn the sound off. Only
+   the ON/OFF *decision to run Intro Mode at all* is hidden behind the
+   secret trigger below; muting is never hidden.
 
    HOW TO TURN IT ON FOR EVERYONE (all visitors, every browser)
    Flip INTRO_ENABLED_DEFAULT below to `true` and redeploy. This is a
@@ -50,64 +51,71 @@
    *   <script>window.HUK53_INTRO_TRACK = "assets/audio/xyz.mp3";</script>
    * If that file doesn't exist (yet), the visual motif still runs; we
    * don't synthesize a fallback soundtrack here — see README for why.
+   *
+   * The mute/sound button is shown immediately once intro mode is on —
+   * *before* playback even starts — so every visitor has a direct, always-
+   * available way to turn the sound off, regardless of whether autoplay
+   * succeeded yet. Muting here also cancels any pending autoplay retry.
    * ------------------------------------------------------------------ */
   let introAudio = null;
-  let muteBtn = null;
+  let soundBtn = null;
+  let userMuted = false;
 
-  function buildMuteButton() {
+  function buildSoundButton() {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "intro-mute-btn";
-    btn.setAttribute("aria-label", "Soundtrack stummschalten");
-    btn.innerHTML = "🔊";
-    btn.addEventListener("click", () => {
-      if (!introAudio) return;
-      introAudio.muted = !introAudio.muted;
-      btn.innerHTML = introAudio.muted ? "🔇" : "🔊";
-      btn.setAttribute("aria-label", introAudio.muted ? "Soundtrack einschalten" : "Soundtrack stummschalten");
+    updateSoundButton(btn);
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      userMuted = !userMuted;
+      if (introAudio) introAudio.muted = userMuted;
+      updateSoundButton(btn);
+      if (!userMuted) attemptPlay(); // resume/retry immediately on unmute
     });
     document.body.appendChild(btn);
     return btn;
   }
 
-  function pauseIntroAudio() {
-    if (introAudio) introAudio.pause();
-    if (muteBtn) muteBtn.remove();
-    muteBtn = null;
+  function updateSoundButton(btn) {
+    btn.innerHTML = userMuted ? "🔇" : "🔊";
+    btn.setAttribute("aria-label", userMuted ? "Soundtrack einschalten" : "Soundtrack stummschalten");
   }
 
-  function startIntroSoundtrack() {
-    const src = window.HUK53_INTRO_TRACK;
-    if (!src) return;
-
-    introAudio = new Audio(src);
-    introAudio.loop = true;
-    introAudio.volume = 0.55;
-
-    const attempt = () => introAudio.play();
-
-    attempt().then(showMuteButton).catch(() => {
+  function attemptPlay() {
+    if (!introAudio || userMuted) return;
+    introAudio.play().catch(() => {
       // Blocked by the browser's autoplay policy — try again on the
       // visitor's first interaction with the page (a click/tap/keypress
-      // anywhere). This is the closest a browser allows to "plays
-      // immediately on open".
+      // anywhere other than the sound button itself, handled above).
+      // This is the closest a browser allows to "plays immediately".
       const retry = () => {
-        attempt().then(showMuteButton).catch(() => {});
-        document.removeEventListener("pointerdown", retry);
-        document.removeEventListener("keydown", retry);
+        if (!userMuted) introAudio.play().catch(() => {});
       };
       document.addEventListener("pointerdown", retry, { once: true });
       document.addEventListener("keydown", retry, { once: true });
     });
+  }
+
+  function pauseIntroAudio() {
+    if (introAudio) introAudio.pause();
+  }
+
+  function startIntroSoundtrack() {
+    soundBtn = buildSoundButton(); // visible right away, even before playback starts
+
+    const src = window.HUK53_INTRO_TRACK;
+    if (!src) return; // visual motif only — no soundtrack file declared for this page
+
+    introAudio = new Audio(src);
+    introAudio.loop = true;
+    introAudio.volume = 0.55;
+    attemptPlay();
 
     // If a visitor presses a track's own play button, get out of the way.
     document.addEventListener("click", (e) => {
       if (e.target.closest(".play-btn")) pauseIntroAudio();
     });
-  }
-
-  function showMuteButton() {
-    if (!muteBtn) muteBtn = buildMuteButton();
   }
 
   function applyIntroMode() {
