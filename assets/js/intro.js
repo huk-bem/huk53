@@ -33,7 +33,7 @@
 (() => {
   "use strict";
 
-  const INTRO_ENABLED_DEFAULT = false;
+  const INTRO_ENABLED_DEFAULT = true;
   const OVERRIDE_KEY = "huk53_intro_override"; // "on" | "off" | (absent = default)
   const SECRET_WORD = "huk53";
 
