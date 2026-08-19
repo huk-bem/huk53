@@ -51,6 +51,9 @@
 /* ---- Jazz page header ---------------------------------------------------- */
 
 .jazz-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   padding: clamp(7rem, 12vw, 9rem) 0 clamp(2.5rem, 5vw, 4rem);
   text-align: center;
 }
