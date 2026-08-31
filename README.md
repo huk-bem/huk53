@@ -2,8 +2,10 @@
 
 Künstlerseite für **HUK FUSION EDM** — Dance- und EDM-Produktionen aus dem
 HUK53-Studio, mit Crossover- und Fusion-Elementen. One-Pager mit sechs
-Tracks (Player, Likes, Kommentare) und Studio-Info. Vollständig
-clientseitig (Vanilla HTML/CSS/JS), keine Backend-Abhängigkeiten.
+Tracks (Player, Likes, Kommentare) und Studio-Info. Die Seite selbst ist
+vollständig statisch (Vanilla HTML/CSS/JS, GitHub Pages) — Likes und
+Kommentare sind über ein kleines, direkt angebundenes Supabase-Projekt
+persistent und für alle Besucher:innen sichtbar (siehe unten).
 
 Veröffentlicht via GitHub Pages: https://huk-bem.github.io/huk53/
 
@@ -18,7 +20,9 @@ assets/css/style.css    Design (Dark/Neon, minimal & poppig)
 assets/css/legal.css    Zusatzstyles für Impressum/Datenschutz
 assets/css/intro.css    Zusatzstyles für Intro-Modus (Settings-Bar, Sound-Button)
 assets/css/jazz.css     Zusatzstyles für die (ausgeblendete) Jazz-Seite
-assets/js/main.js       Player, Likes/Kommentare (localStorage), Animationen
+assets/css/consent.css  Zusatzstyles für den Cookie-Consent-Banner
+assets/js/main.js       Player, Likes/Kommentare (Supabase), Animationen
+assets/js/consent.js    Cookie-Banner + Supabase-Client + Besuchskennung
 assets/js/intro.js      Intro-Modus: Hintergrund-Motiv + Autoplay-Soundtrack
 assets/js/jazz.js       Jazz-Player (nur relevant, falls die Seite reaktiviert wird)
 assets/audio/           MP3-Dateien (siehe README dort für Status pro Track)
@@ -88,22 +92,54 @@ kommentiert):
 ## Impressum & Datenschutz
 
 `impressum.html` und `datenschutz.html` sind verlinkt im Footer jeder
-Seite. Die technischen Abschnitte in `datenschutz.html` (Hosting via
-GitHub Pages, Google Fonts, localStorage für Likes/Kommentare) beschreiben
-bereits korrekt, wie die Seite tatsächlich funktioniert. **Vor dem echten
-Livegang unbedingt ausfüllen:** alle `[Platzhalter]`-Stellen in beiden
-Dateien mit den rechtsverbindlichen Angaben des Studios (Name/Rechtsform,
-Anschrift, Kontakt) — ein unvollständiges Impressum ist in Deutschland
-abmahnfähig.
+Seite. Beide sind mit den echten Studio-Angaben ausgefüllt (siehe
+`impressum.html` für die offen gebliebenen Kleinigkeiten wie USt-ID).
+`datenschutz.html` beschreibt Hosting (GitHub Pages + Supabase), Google
+Fonts, das Cookie für Likes/Kommentare und die Datenbank-Speicherung.
 
-## Feedback-Spalte (Likes & Kommentare)
+## Feedback-Spalte (Likes & Kommentare, Supabase)
 
-Likes und Kommentare pro Song werden aktuell **lokal im Browser der
-jeweiligen Besucher:in** gespeichert (`localStorage`) — es gibt bewusst
-keinen Server. Für ein Feedback-Board, das für alle Besucher:innen
-gemeinsam sichtbar ist, muss `assets/js/main.js` an ein Backend oder
-einen Formular-Service (z. B. eine kleine API, Supabase, Firebase o. Ä.)
-angebunden werden.
+Likes und Kommentare sind **echt, persistent und für alle Besucher:innen
+sichtbar** — gespeichert in einem kleinen Supabase-Projekt (Postgres-
+Datenbank), direkt aus dem Browser angebunden (kein eigener API-Server
+nötig). Abgesichert über Supabase Row Level Security (RLS) statt über ein
+Passwort im Code: der eingebettete „anon public"-Key ist bewusst öffentlich
+— er darf laut Supabase-Design im Client-Code stehen, weil die RLS-Regeln
+in der Datenbank selbst festlegen, was damit erlaubt ist (siehe
+`supabase-setup.sql`, wird bei Bedarf erneut zur Verfügung gestellt).
+Zusätzlich serverseitig (per DB-Trigger) abgesichert: Eingabe-Längen-
+Limits und ein einfaches Rate-Limit gegen Spam.
+
+**Einrichtung (einmalig, ca. 5 Minuten):**
+1. Kostenloses Projekt auf [supabase.com](https://supabase.com/dashboard) anlegen
+2. Im **SQL Editor** den Inhalt von [`supabase-setup.sql`](./supabase-setup.sql)
+   ausführen (Tabellen `comments`, `likes`, `consent_log` + RLS-Policies +
+   Rate-Limit-Trigger)
+3. Unter **Project Settings → API**: „Project URL" und „anon public"-Key
+   kopieren
+4. Beide Werte in `index.html` eintragen:
+   ```html
+   <script>
+     window.HUK53_SUPABASE_URL = "https://xxxxx.supabase.co";
+     window.HUK53_SUPABASE_ANON_KEY = "eyJ...";
+   </script>
+   ```
+
+Ohne diese beiden Werte (aktuell leer) läuft die Seite weiter normal,
+Like-Button und Kommentarformular zeigen dann nur „Backend noch nicht
+verbunden" statt zu funktionieren — kein Absturz, kein Datenverlust.
+
+**Moderation:** Kommentare löschen/bearbeiten geht aktuell nur direkt im
+Supabase **Table Editor** (mit deinem eigenen Login) — bewusst kein
+öffentlicher Lösch-Endpunkt, damit niemand fremde Kommentare entfernen
+kann.
+
+**Wichtige Einschränkung, ehrlich benannt:** Ohne echte Nutzerkonten kann
+die Datenbank technisch nicht zwischen „meinem eigenen" und „fremdem"
+Like unterscheiden — jede:r könnte grundsätzlich jede Like-Zeile togglen.
+Der praktische Schaden ist gering (kein Zugriff auf andere Daten), aber
+das ist der Kompromiss der kontofreien Lösung, transparent statt
+verschwiegen.
 
 ## Gig/Booking-Bereich
 

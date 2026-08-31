@@ -1,8 +1,10 @@
 /* ==========================================================================
-   HUK53 — One-Pager Logic
-   Vanilla JS, no dependencies, no backend. Comments/Likes persist locally
-   in the visitor's own browser (localStorage) — see the disclaimer text
-   rendered under each song's feedback column.
+   HUK FUSION EDM — One-Pager Logic
+   Player + hero + stats are plain vanilla JS. Likes/comments are backed by
+   a small Supabase project (see assets/js/consent.js for the client setup
+   and window.HUK53_SUPABASE_URL/ANON_KEY in index.html) — real, shared,
+   persistent storage, gated behind the cookie-consent banner since posting
+   a like/comment needs the anonymous visitor id that cookie provides.
    ========================================================================== */
 
 (() => {
@@ -18,78 +20,21 @@
    * All six tracks below are live. `bpm`/`genre` are placeholder
    * estimates — adjust to the real values, they only affect the tag chip
    * and the (unused, since real files exist) demo-loop fallback tempo.
+   *
+   * No seed likes/comments here on purpose: once likes/comments are real
+   * and shared (see section 4b below), inventing fake starter numbers or
+   * fictional reviewer quotes would misrepresent genuine audience
+   * feedback — every like and comment shown is now a real one.
    * ------------------------------------------------------------------ */
   const SONGS = [
-    {
-      id: "back-on-track",
-      title: "Back on Track",
-      genre: "Dance / EDM",
-      bpm: 126,
-      audioSrc: "assets/audio/back-on-track.mp3",
-      baseLikes: 142,
-      seedComments: [
-        { name: "Mira", text: "Der Drop bei 1:10 ist richtig clean produziert.", date: "2026-07-02" },
-        { name: "Jonas", text: "Mix hat viel Punch, bleibt sofort im Kopf hängen.", date: "2026-07-14" },
-      ],
-    },
-    {
-      id: "sonar",
-      title: "Sonar",
-      genre: "Dance / Techno",
-      bpm: 130,
-      audioSrc: "assets/audio/sonar.mp3",
-      baseLikes: 118,
-      seedComments: [
-        { name: "Elif", text: "Bassline ist brutal gut abgemischt.", date: "2026-06-28" },
-      ],
-    },
-    {
-      id: "pocket-of-rain",
-      title: "Pocket of Rain",
-      genre: "EDM / Fusion",
-      bpm: 124,
-      audioSrc: "assets/audio/pocket-of-rain.mp3",
-      baseLikes: 101,
-      seedComments: [
-        { name: "Noah", text: "Die Fusion-Elemente in der Bridge sind richtig spannend.", date: "2026-08-05" },
-      ],
-    },
-    {
-      id: "jump",
-      title: "Jump",
-      genre: "Dance / EDM",
-      bpm: 128,
-      audioSrc: "assets/audio/jump.mp3",
-      baseLikes: 87,
-      seedComments: [
-        { name: "Lea", text: "Sofort tanzbar, toller Groove.", date: "2026-08-09" },
-      ],
-    },
-    {
-      id: "new-world",
-      title: "New World",
-      genre: "EDM / Crossover",
-      bpm: 122,
-      audioSrc: "assets/audio/new-world.mp3",
-      baseLikes: 76,
-      seedComments: [
-        { name: "Kim", text: "Crossover-Sound trifft's genau, sehr eigenständig.", date: "2026-08-12" },
-      ],
-    },
-    {
-      id: "pulp-random-roll-it-out",
-      title: "Pulp Random Roll It Out",
-      genre: "Dance / Fusion",
-      bpm: 132,
-      audioSrc: "assets/audio/pulp-random-roll-it-out.mp3",
-      baseLikes: 64,
-      seedComments: [
-        { name: "Aylin", text: "Ungewöhnlicher Titel, aber der Track groovt richtig.", date: "2026-08-15" },
-      ],
-    },
+    { id: "back-on-track", title: "Back on Track", genre: "Dance / EDM", bpm: 126, audioSrc: "assets/audio/back-on-track.mp3" },
+    { id: "sonar", title: "Sonar", genre: "Dance / Techno", bpm: 130, audioSrc: "assets/audio/sonar.mp3" },
+    { id: "pocket-of-rain", title: "Pocket of Rain", genre: "EDM / Fusion", bpm: 124, audioSrc: "assets/audio/pocket-of-rain.mp3" },
+    { id: "jump", title: "Jump", genre: "Dance / EDM", bpm: 128, audioSrc: "assets/audio/jump.mp3" },
+    { id: "new-world", title: "New World", genre: "EDM / Crossover", bpm: 122, audioSrc: "assets/audio/new-world.mp3" },
+    { id: "pulp-random-roll-it-out", title: "Pulp Random Roll It Out", genre: "Dance / Fusion", bpm: 132, audioSrc: "assets/audio/pulp-random-roll-it-out.mp3" },
   ];
 
-  const STORAGE_PREFIX = "huk53_";
   const WAVEFORM_BARS = 22;
 
   /* ------------------------------------------------------------------ *
@@ -183,41 +128,91 @@
     return `${m}:${s}`;
   }
 
-  function loadLikeState(song) {
-    const liked = localStorage.getItem(`${STORAGE_PREFIX}liked_${song.id}`) === "1";
-    const stored = localStorage.getItem(`${STORAGE_PREFIX}likecount_${song.id}`);
-    const count = stored !== null ? parseInt(stored, 10) : song.baseLikes;
-    return { liked, count };
+  /* ------------------------------------------------------------------ *
+   * 4b) LIKES & COMMENTS — Supabase-backed (real, shared, persistent)
+   * Gated behind the cookie-consent visitor id from consent.js. Degrades
+   * gracefully (clear inline message, nothing throws) if Supabase isn't
+   * configured yet or a request fails — the rest of the page keeps working.
+   * ------------------------------------------------------------------ */
+  function getVisitorId() {
+    return window.HUK53?.getVisitorId?.() || null;
   }
 
-  function saveLikeState(song, liked, count) {
-    localStorage.setItem(`${STORAGE_PREFIX}liked_${song.id}`, liked ? "1" : "0");
-    localStorage.setItem(`${STORAGE_PREFIX}likecount_${song.id}`, String(count));
+  async function fetchLikeState(song) {
+    const supa = window.HUK53?.getSupabase?.();
+    if (!supa) return { count: null, liked: false, unavailable: true };
+    const visitorId = getVisitorId();
+    const { count } = await supa
+      .from("likes")
+      .select("track_id", { count: "exact", head: true })
+      .eq("track_id", song.id);
+    let liked = false;
+    if (visitorId) {
+      const { data } = await supa
+        .from("likes")
+        .select("track_id")
+        .eq("track_id", song.id)
+        .eq("visitor_id", visitorId)
+        .maybeSingle();
+      liked = !!data;
+    }
+    return { count: count ?? 0, liked, unavailable: false };
   }
 
-  function loadComments(song) {
-    const raw = localStorage.getItem(`${STORAGE_PREFIX}comments_${song.id}`);
-    const extra = raw ? JSON.parse(raw) : [];
-    return [...song.seedComments, ...extra];
+  async function toggleLike(song, currentlyLiked) {
+    const supa = window.HUK53?.getSupabase?.();
+    const visitorId = getVisitorId();
+    if (!supa || !visitorId) throw new Error("unavailable");
+    if (currentlyLiked) {
+      await supa.from("likes").delete().eq("track_id", song.id).eq("visitor_id", visitorId);
+    } else {
+      const { error } = await supa.from("likes").insert({ track_id: song.id, visitor_id: visitorId });
+      if (error) throw error;
+    }
   }
 
-  function addComment(song, comment) {
-    const raw = localStorage.getItem(`${STORAGE_PREFIX}comments_${song.id}`);
-    const extra = raw ? JSON.parse(raw) : [];
-    extra.push(comment);
-    localStorage.setItem(`${STORAGE_PREFIX}comments_${song.id}`, JSON.stringify(extra));
+  async function fetchComments(song) {
+    const supa = window.HUK53?.getSupabase?.();
+    if (!supa) return { comments: [], unavailable: true };
+    const { data, error } = await supa
+      .from("comments")
+      .select("name, body, created_at")
+      .eq("track_id", song.id)
+      .order("created_at", { ascending: false })
+      .limit(50);
+    if (error) return { comments: [], unavailable: true };
+    return { comments: data || [], unavailable: false };
   }
 
-  function renderComments(container, song) {
-    const comments = loadComments(song);
+  async function postComment(song, name, text) {
+    const supa = window.HUK53?.getSupabase?.();
+    const visitorId = getVisitorId();
+    if (!supa || !visitorId) throw new Error("unavailable");
+    const { error } = await supa
+      .from("comments")
+      .insert({ track_id: song.id, name, body: text, visitor_id: visitorId });
+    if (error) throw error;
+  }
+
+  function formatCommentDate(iso) {
+    try {
+      return new Date(iso).toISOString().slice(0, 10);
+    } catch {
+      return "";
+    }
+  }
+
+  function renderComments(container, comments) {
+    if (!comments.length) {
+      container.innerHTML = `<p class="comment comment--empty">Noch keine Kommentare — sei die/der Erste.</p>`;
+      return;
+    }
     container.innerHTML = comments
-      .slice()
-      .reverse()
       .map(
         (c) => `
         <div class="comment">
-          <strong>${escapeHtml(c.name)}</strong>${escapeHtml(c.text)}
-          <time>${c.date}</time>
+          <strong>${escapeHtml(c.name)}</strong>${escapeHtml(c.body)}
+          <time>${formatCommentDate(c.created_at)}</time>
         </div>`
       )
       .join("");
@@ -241,7 +236,6 @@
   }
 
   function songCardTemplate(song) {
-    const { liked, count } = loadLikeState(song);
     return `
     <article class="song-card" id="card-${song.id}" data-id="${song.id}">
       <div class="song-card__player">
@@ -279,14 +273,14 @@
 
       <div class="song-card__feedback">
         <div class="feedback__row">
-          <button class="like-btn ${liked ? "is-liked" : ""}" type="button" data-role="like-btn" aria-pressed="${liked}">
+          <button class="like-btn" type="button" data-role="like-btn" aria-pressed="false" disabled>
             <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.3C.6 8.4 2.3 5 5.8 5c2 0 3.4 1 4.2 2.3C10.8 6 12.2 5 14.2 5c3.5 0 5.2 3.4 3.8 6.7C19.5 16.4 12 21 12 21z"/></svg>
-            <span data-role="like-count">${count}</span>
+            <span data-role="like-count">…</span>
           </button>
           <span class="feedback__count-label" data-role="comment-count-label"></span>
         </div>
 
-        <div class="comments" data-role="comments"></div>
+        <div class="comments" data-role="comments"><p class="comment comment--empty">Lädt …</p></div>
 
         <form class="comment-form" data-role="comment-form">
           <div class="comment-form__row">
@@ -296,7 +290,7 @@
           <button type="submit">Kommentar senden</button>
         </form>
 
-        <p class="feedback__disclaimer">💬 Likes &amp; Kommentare werden lokal in deinem Browser gespeichert (Demo-Modus ohne Server). Für ein geteiltes Feedback-Board für alle Besucher:innen an ein Backend / einen Formular-Service anbinden.</p>
+        <p class="feedback__disclaimer" data-role="feedback-note">💬 Likes &amp; Kommentare sind für alle Besucher:innen sichtbar und werden sicher gespeichert. Dafür ist einmalig die Zustimmung zum Cookie nötig (Banner am unteren Bildschirmrand).</p>
       </div>
     </article>`;
   }
@@ -402,40 +396,95 @@
       audio.currentTime = pct * audio.duration;
     });
 
-    /* --- Likes --- */
-    likeBtn.addEventListener("click", () => {
-      const { liked, count } = loadLikeState(song);
-      const nextLiked = !liked;
-      const nextCount = count + (nextLiked ? 1 : -1);
-      saveLikeState(song, nextLiked, nextCount);
-      likeBtn.classList.toggle("is-liked", nextLiked);
-      likeBtn.setAttribute("aria-pressed", String(nextLiked));
-      likeCountEl.textContent = nextCount;
+    /* --- Likes & Comments (Supabase, cookie-consent-gated) --- */
+    let likeState = { liked: false, count: null };
+
+    function renderLikeButton() {
+      const hasConsent = !!window.HUK53?.hasConsent?.();
+      const configured = !!window.HUK53?.getSupabase?.();
+      likeBtn.classList.toggle("is-liked", likeState.liked);
+      likeBtn.setAttribute("aria-pressed", String(likeState.liked));
+      likeCountEl.textContent = likeState.count === null ? "–" : likeState.count;
+      likeBtn.disabled = !hasConsent || !configured;
+      likeBtn.title = !configured
+        ? "Feedback-Backend noch nicht verbunden"
+        : hasConsent ? "" : "Bitte zuerst das Cookie akzeptieren (Banner unten)";
+    }
+
+    async function loadLikes() {
+      try {
+        likeState = await fetchLikeState(song);
+      } catch {
+        likeState = { liked: false, count: null };
+      }
+      renderLikeButton();
+    }
+
+    likeBtn.addEventListener("click", async () => {
+      if (likeBtn.disabled) return;
+      const prev = likeState;
+      likeState = { liked: !prev.liked, count: (prev.count ?? 0) + (!prev.liked ? 1 : -1) };
+      renderLikeButton();
       likeBtn.classList.remove("pop");
       void likeBtn.offsetWidth; // restart animation
       likeBtn.classList.add("pop");
+      try {
+        await toggleLike(song, prev.liked);
+      } catch (err) {
+        console.warn("Like konnte nicht gespeichert werden:", err);
+        likeState = prev; // revert optimistic update
+        renderLikeButton();
+      }
     });
 
-    /* --- Comments --- */
-    function refreshComments() {
-      const comments = loadComments(song);
-      renderComments(commentsEl, song);
-      commentCountLabel.textContent = `${comments.length} Kommentar${comments.length === 1 ? "" : "e"}`;
+    async function refreshComments() {
+      const { comments, unavailable } = await fetchComments(song);
+      renderComments(commentsEl, comments);
+      commentCountLabel.textContent = unavailable
+        ? ""
+        : `${comments.length} Kommentar${comments.length === 1 ? "" : "e"}`;
     }
-    refreshComments();
 
-    commentForm.addEventListener("submit", (e) => {
+    function updateFormAvailability() {
+      const hasConsent = !!window.HUK53?.hasConsent?.();
+      const configured = !!window.HUK53?.getSupabase?.();
+      const enabled = hasConsent && configured;
+      commentForm.querySelectorAll("input, textarea, button").forEach((el) => { el.disabled = !enabled; });
+      const submitBtn = commentForm.querySelector('button[type="submit"]');
+      if (submitBtn) {
+        submitBtn.textContent = !configured
+          ? "Backend noch nicht verbunden"
+          : hasConsent ? "Kommentar senden" : "Bitte Cookie akzeptieren";
+      }
+    }
+
+    loadLikes();
+    refreshComments();
+    updateFormAvailability();
+
+    document.addEventListener("huk53:consent-changed", () => {
+      renderLikeButton();
+      updateFormAvailability();
+      if (window.HUK53?.hasConsent?.()) loadLikes();
+    });
+
+    commentForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+      if (!window.HUK53?.hasConsent?.()) return;
       const name = commentForm.elements.name.value.trim();
       const text = commentForm.elements.text.value.trim();
       if (!name || !text) return;
-      addComment(song, {
-        name,
-        text,
-        date: new Date().toISOString().slice(0, 10),
-      });
-      commentForm.reset();
-      refreshComments();
+      const submitBtn = commentForm.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      try {
+        await postComment(song, name, text);
+        commentForm.reset();
+        await refreshComments();
+      } catch (err) {
+        console.warn("Kommentar konnte nicht gespeichert werden:", err);
+      } finally {
+        submitBtn.disabled = false;
+      }
     });
   }
 

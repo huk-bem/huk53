@@ -50,6 +50,11 @@
         Diese Verarbeitung dient der technischen Auslieferung der Seite und liegt außerhalb
         unserer Kontrolle. Details: <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub Privacy Statement</a>.
       </p>
+      <p>
+        Die Datenbank für Likes, Kommentare und die Cookie-Einwilligung (siehe unten) läuft bei
+        <strong>Supabase</strong> (Supabase Inc.), Serverstandort Frankfurt am Main (EU). Details:
+        <a href="https://supabase.com/privacy" target="_blank" rel="noopener">Supabase Privacy Policy</a>.
+      </p>
     </section>
 
     <section>
@@ -65,19 +70,50 @@
     </section>
 
     <section>
-      <h2>4. Likes &amp; Kommentare (lokale Speicherung)</h2>
+      <h2>4. Cookie für Likes &amp; Kommentare</h2>
       <p>
-        Die Likes und Kommentare pro Song werden <strong>ausschließlich lokal in deinem
-        Browser</strong> über die Web-Storage-Technologie <code>localStorage</code> gespeichert.
-        Es findet dabei <strong>keine Übertragung an einen Server</strong> statt — wir sehen
-        deine Likes/Kommentare nicht, sie sind nur auf deinem eigenen Gerät sichtbar und bleiben
-        dort, bis du sie über die Browsereinstellungen löschst (z. B. „Website-Daten löschen").
-        Ein eingegebener Name wird ebenfalls nur lokal gespeichert.
+        Wenn du dem beim ersten Seitenaufruf eingeblendeten Banner zustimmst, setzen wir ein
+        einzelnes Cookie (<code>huk53_visitor_id</code>), das eine zufällig erzeugte, anonyme
+        Kennung enthält. Dieses Cookie dient ausschließlich dazu, deine Likes und Kommentare
+        einem (nicht mit dir persönlich verknüpften) Besuchsprofil zuzuordnen und Missbrauch
+        (Spam) zu verhindern. Es wird <strong>nicht</strong> zu Tracking, Werbung oder Analyse
+        eingesetzt.
+      </p>
+      <p>
+        <strong>Rechtsgrundlage:</strong> deine Einwilligung (§ 25 Abs. 1 TTDSG, Art. 6 Abs. 1
+        lit. a DSGVO). Die Erteilung ist freiwillig: Lehnst du ab oder triffst keine Auswahl,
+        wird kein Cookie gesetzt und die Website funktioniert davon unabhängig ganz normal weiter
+        — lediglich das Liken und Kommentieren steht dann nicht zur Verfügung, da diese Funktion
+        die anonyme Kennung technisch benötigt. Deine Entscheidung (zugestimmt oder abgelehnt,
+        Zeitpunkt, aufgerufene Seite) speichern wir nur zum nach Art. 5 Abs. 2, 7 Abs. 1 DSGVO
+        erforderlichen Nachweis der Einwilligung — <strong>ohne</strong> deine IP-Adresse. Das
+        Cookie ist ein Jahr gültig; du kannst es jederzeit über deine Browsereinstellungen
+        löschen, wodurch beim nächsten Besuch erneut das Banner erscheint.
       </p>
     </section>
 
     <section>
-      <h2>5. Deine Rechte</h2>
+      <h2>5. Likes &amp; Kommentare (Datenbank)</h2>
+      <p>
+        Likes und Kommentare werden — anders als zuvor — nicht mehr nur lokal, sondern in einer
+        Datenbank gespeichert und sind für <strong>alle Besucher:innen sichtbar</strong>, nicht
+        nur für dich. Konkret gespeichert werden je Kommentar: der von dir eingegebene Name, der
+        Kommentartext, ein Zeitstempel sowie die anonyme Besuchskennung aus dem Cookie oben —
+        keine Klarnamenpflicht, du kannst auch ein Pseudonym eintragen. Bei Likes wird nur die
+        anonyme Kennung zusammen mit dem Track gespeichert.
+      </p>
+      <p>
+        <strong>Rechtsgrundlage:</strong> deine Einwilligung, da die Funktion insgesamt (Cookie
+        + Speicherung) nur nach Zustimmung nutzbar ist (Art. 6 Abs. 1 lit. a DSGVO). Zum Schutz
+        vor Missbrauch wird serverseitig eine einfache Rate-Begrenzung angewendet (z. B. maximal
+        5 Kommentare pro Besuchskennung in 10 Minuten); dabei werden keine zusätzlichen
+        personenbezogenen Daten erhoben. Kommentare kannst du jederzeit über die
+        Kontaktadresse oben löschen lassen.
+      </p>
+    </section>
+
+    <section>
+      <h2>6. Deine Rechte</h2>
       <p>Du hast im Rahmen der geltenden gesetzlichen Bestimmungen jederzeit das Recht auf:</p>
       <ul>
         <li>Auskunft über deine bei uns gespeicherten personenbezogenen Daten (Art. 15 DSGVO)</li>

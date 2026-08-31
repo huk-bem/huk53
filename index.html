@@ -19,6 +19,7 @@
 
 <link rel="stylesheet" href="assets/css/style.css" />
 <link rel="stylesheet" href="assets/css/intro.css" />
+<link rel="stylesheet" href="assets/css/consent.css" />
 </head>
 <body>
 
@@ -120,6 +121,14 @@
   </div>
 </footer>
 
+<!-- Likes/Kommentare: Supabase-Projekt (siehe README.md "Likes & Kommentare (Supabase)").
+     Beide Werte sind bewusst öffentlich/sicher einzubetten — siehe dortige Erklärung. -->
+<script>
+  window.HUK53_SUPABASE_URL = ""; // TODO: Project URL aus Supabase eintragen
+  window.HUK53_SUPABASE_ANON_KEY = ""; // TODO: "anon public" Key aus Supabase eintragen
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/consent.js"></script>
 <script src="assets/js/main.js"></script>
 <!-- Intro Mode: hidden owner toggle for background motif + autoplay soundtrack. See assets/js/intro.js. -->
 <script>window.HUK53_INTRO_TRACK = "assets/audio/back-on-track.mp3";</script>

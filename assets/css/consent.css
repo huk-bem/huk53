@@ -1,0 +1,88 @@
+/* ==========================================================================
+   HUK FUSION EDM — Cookie consent banner
+   ========================================================================== */
+
+.cookie-banner {
+  position: fixed;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 400;
+  max-width: 640px;
+  margin-inline: auto;
+  background: rgba(15, 13, 28, 0.97);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.4rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(14px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  transform: translateY(120%);
+  opacity: 0;
+  transition: transform 0.35s var(--ease), opacity 0.3s var(--ease);
+}
+
+.cookie-banner.is-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.cookie-banner__text {
+  flex: 1;
+  min-width: 240px;
+}
+
+.cookie-banner__text strong {
+  display: block;
+  font-size: 0.92rem;
+  margin-bottom: 0.35rem;
+}
+
+.cookie-banner__text p {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--text-dim);
+}
+
+.cookie-banner__text a {
+  color: var(--cyan);
+  text-decoration: underline;
+}
+
+.cookie-banner__actions {
+  display: flex;
+  gap: 0.6rem;
+  flex: none;
+}
+
+.cookie-banner__actions .btn {
+  padding: 0.6rem 1.1rem;
+  font-size: 0.85rem;
+}
+
+/* --- Inline hint shown on like/comment controls before consent --- */
+
+.consent-hint {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  line-height: 1.5;
+}
+
+.consent-hint button {
+  background: none;
+  border: none;
+  color: var(--cyan);
+  text-decoration: underline;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+}
+
+@media (max-width: 560px) {
+  .cookie-banner { flex-direction: column; align-items: stretch; }
+  .cookie-banner__actions { justify-content: flex-end; }
+}

@@ -635,6 +635,11 @@ section { position: relative; padding: clamp(4.5rem, 9vw, 7.5rem) 0; }
   transition: transform 0.15s var(--ease), border-color 0.2s, background 0.2s;
 }
 
+.like-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .like-btn svg {
   width: 16px; height: 16px;
   fill: none;
@@ -681,6 +686,13 @@ section { position: relative; padding: clamp(4.5rem, 9vw, 7.5rem) 0; }
   background: rgba(255, 255, 255, 0.04);
   font-size: 0.85rem;
   line-height: 1.45;
+}
+
+.comment--empty {
+  color: var(--text-faint);
+  font-style: italic;
+  background: transparent;
+  padding-inline: 0.1rem;
 }
 
 .comment strong {
@@ -739,6 +751,13 @@ section { position: relative; padding: clamp(4.5rem, 9vw, 7.5rem) 0; }
   color: #0b0b14;
   font-weight: 700;
   font-size: 0.82rem;
+}
+
+.comment-form input:disabled,
+.comment-form textarea:disabled,
+.comment-form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .feedback__disclaimer {
