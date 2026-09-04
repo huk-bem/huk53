@@ -73,6 +73,31 @@
   line-height: 1.7;
 }
 
+.jazz-hero__grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(2rem, 5vw, 4rem);
+  flex-wrap: wrap;
+  text-align: left;
+}
+
+.jazz-hero__text { max-width: 480px; }
+
+.jazz-hero__cover {
+  width: clamp(180px, 22vw, 260px);
+  height: clamp(180px, 22vw, 260px);
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  flex: none;
+}
+
+@media (max-width: 640px) {
+  .jazz-hero__grid { flex-direction: column; text-align: center; }
+  .jazz-hero__text { max-width: 100%; }
+}
+
 /* ---- Jazz track grid ------------------------------------------------------ */
 
 .jazz-grid {

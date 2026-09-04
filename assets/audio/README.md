@@ -19,7 +19,14 @@ Ladezeit auf der Startseite). Die aktuell hinterlegten Dateien liegen bei
 64 kbps und teils deutlich über 8 MB — für bessere Ladezeiten gerne durch
 komprimiertere Versionen ersetzen (gleicher Dateiname reicht).
 
-## Jazz-Seite (aktuell ausgeblendet)
+## Jazz-Fusion-Seite ("Moments and Moods")
 
-`jazz.html` ist ausgeblendet (siehe Haupt-README), die zugehörigen
-Platzhalter-Dateinamen (`jazz-*.mp3`) sind daher vorerst nicht relevant.
+Referenziert in `assets/js/jazz.js` → `JAZZ_TRACKS[].audioSrc`. Alle vier
+aktuell live:
+
+- ✅ `echo.mp3` — „Echo"
+- ✅ `fading-light.mp3` — „Fading Light"
+- ✅ `sunday-feeling.mp3` — „Sunday Feeling"
+- ✅ `end-of-summer.mp3` — „End of Summer"
+
+Gleiches 64-kbps-Ladezeit-Hinweis wie oben gilt auch hier.

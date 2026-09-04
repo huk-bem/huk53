@@ -1,9 +1,9 @@
 /* ==========================================================================
-   HUK53 — Jazz page logic
-   Five tracks, 30-second capped preview each. After 30s (or if the file
+   HUK — Jazz Fusion page logic ("Moments and Moods")
+   Four tracks, 30-second capped preview each. After 30s (or if the file
    ends early) playback stops for good and two streaming buttons (Apple
-   Music / Spotify) fade in with the real links. No re-play afterwards —
-   this is a one-shot preview per track per page load, by design.
+   Music / Spotify) fade in. No re-play afterwards — this is a one-shot
+   preview per track per page load, by design (same as the EDM page).
    ========================================================================== */
 
 (() => {
@@ -13,57 +13,52 @@
 
   /* ------------------------------------------------------------------ *
    * TRACK CONFIG
-   * Same fallback behaviour as the dance tracks on the homepage: point
-   * `audioSrc` at a real file in assets/audio/ to go live — until that
-   * file exists, a short synthesized "jazz-ish" loop plays instead so the
-   * page is fully interactive out of the box. `appleUrl`/`spotifyUrl` are
-   * placeholders — replace with the real links before launch.
+   * All four tracks are live (real MP3s in assets/audio/). Apple Music
+   * and Spotify only publish an artist-level page for HUK Fusion so far
+   * (no individual song links yet) — both buttons currently point there
+   * for every track. Swap in real per-song URLs here as soon as they
+   * exist. `bpm` is a rough placeholder, only used for the synthesized
+   * fallback loop if a file ever fails to load.
    * ------------------------------------------------------------------ */
+  const APPLE_MUSIC_URL = "https://music.apple.com/de/artist/huk-fusion/6803407059";
+  const SPOTIFY_URL = "https://open.spotify.com/artist/5V0AuyekqjEpdtGwjL6m85";
+
   const JAZZ_TRACKS = [
     {
-      id: "blue-hour",
-      title: "Blue Hour",
-      tag: "Piano Trio",
+      id: "echo",
+      title: "Echo",
+      tag: "Fusion Jazz",
       bpm: 92,
-      audioSrc: "assets/audio/jazz-blue-hour.mp3",
-      appleUrl: "https://music.apple.com/", // TODO: add the real Apple Music link
-      spotifyUrl: "https://open.spotify.com/", // TODO: add the real Spotify link
+      audioSrc: "assets/audio/echo.mp3",
+      appleUrl: APPLE_MUSIC_URL,
+      spotifyUrl: SPOTIFY_URL,
     },
     {
-      id: "midnight-sax",
-      title: "Midnight Sax",
-      tag: "Sax Ballad",
-      bpm: 76,
-      audioSrc: "assets/audio/jazz-midnight-sax.mp3",
-      appleUrl: "https://music.apple.com/",
-      spotifyUrl: "https://open.spotify.com/",
-    },
-    {
-      id: "velvet-keys",
-      title: "Velvet Keys",
-      tag: "Piano Jazz",
-      bpm: 100,
-      audioSrc: "assets/audio/jazz-velvet-keys.mp3",
-      appleUrl: "https://music.apple.com/",
-      spotifyUrl: "https://open.spotify.com/",
-    },
-    {
-      id: "smoky-room",
-      title: "Smoky Room",
-      tag: "Swing",
-      bpm: 112,
-      audioSrc: "assets/audio/jazz-smoky-room.mp3",
-      appleUrl: "https://music.apple.com/",
-      spotifyUrl: "https://open.spotify.com/",
-    },
-    {
-      id: "autumn-stroll",
-      title: "Autumn Stroll",
-      tag: "Bossa",
+      id: "fading-light",
+      title: "Fading Light",
+      tag: "Fusion Jazz",
       bpm: 88,
-      audioSrc: "assets/audio/jazz-autumn-stroll.mp3",
-      appleUrl: "https://music.apple.com/",
-      spotifyUrl: "https://open.spotify.com/",
+      audioSrc: "assets/audio/fading-light.mp3",
+      appleUrl: APPLE_MUSIC_URL,
+      spotifyUrl: SPOTIFY_URL,
+    },
+    {
+      id: "sunday-feeling",
+      title: "Sunday Feeling",
+      tag: "Fusion Jazz",
+      bpm: 96,
+      audioSrc: "assets/audio/sunday-feeling.mp3",
+      appleUrl: APPLE_MUSIC_URL,
+      spotifyUrl: SPOTIFY_URL,
+    },
+    {
+      id: "end-of-summer",
+      title: "End of Summer",
+      tag: "Fusion Jazz",
+      bpm: 90,
+      audioSrc: "assets/audio/end-of-summer.mp3",
+      appleUrl: APPLE_MUSIC_URL,
+      spotifyUrl: SPOTIFY_URL,
     },
   ];
 

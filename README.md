@@ -28,20 +28,20 @@ zurückführen.
 ```
 index.html              Startseite — kühle Verteilerseite (Hub) für EDM/Jazz Fusion
 edm.html                 EDM-Unterseite — Player, Songs, Likes/Kommentare, Studio-Info
-jazz.html                Jazz-Fusion-Unterseite — aktuell "Coming Soon", siehe unten
-impressum.html          Impressum
-datenschutz.html        Datenschutzerklärung
-assets/css/hub.css      Design der Startseite + Coming-Soon-Seite + Impressum/Datenschutz (schwarz-weiß, dezent)
-assets/css/style.css    Design der EDM-Seite (Dark/Neon, wie bisher)
+jazz.html                Jazz-Fusion-Unterseite — Player, vier "Moments and Moods"-Tracks
+impressum.html          Legal Notice (Impressum)
+datenschutz.html        Privacy Policy (Datenschutzerklärung)
+assets/css/hub.css      Design der Startseite + Impressum/Datenschutz (schwarz-weiß, dezent)
+assets/css/style.css    Design der EDM-Seite (Dark/Neon, wie bisher) — auch von jazz.html genutzt
 assets/css/intro.css    Zusatzstyles für Intro-Modus (nur auf edm.html)
 assets/css/consent.css  Zusatzstyles für den Cookie-Consent-Banner (nur auf edm.html)
-assets/css/jazz.css     Styles für den vollen Jazz-Player — aktuell ungenutzt, siehe unten
-assets/js/main.js       EDM: Player, Likes/Kommentare (Supabase), Animationen
+assets/css/jazz.css     Zusatzstyles für die Jazz-Fusion-Seite (Gold-Akzent, Hero mit Cover)
+assets/js/main.js       Gemeinsame Basis (Nav, Hero-Canvas) + EDM: Player, Likes/Kommentare (Supabase)
 assets/js/consent.js    Cookie-Banner + Supabase-Client + Besuchskennung (nur auf edm.html)
 assets/js/intro.js      Intro-Modus: Hintergrund-Motiv + Autoplay-Soundtrack (nur auf edm.html)
-assets/js/jazz.js       Voller Jazz-Player — aktuell ungenutzt, siehe unten
+assets/js/jazz.js       Jazz-Fusion-Player (4 Tracks, 30s-Vorschau + Streaming-Buttons)
 assets/img/edm-teaser.gif   Cover-Motiv für die EDM-Kachel auf der Startseite
-assets/img/jazz-teaser.jpg  Cover-Motiv ("Moments and Moods") für Jazz-Fusion-Kachel + Coming-Soon-Seite
+assets/img/jazz-teaser.jpg  Cover-Motiv ("Moments and Moods") für Jazz-Fusion-Kachel + Hero
 assets/audio/           MP3-Dateien (siehe README dort für Status pro Track)
 ```
 
@@ -81,24 +81,35 @@ umstellen: pro Track im `SONGS`-Array ein `appleUrl`/`spotifyUrl`-Feld
 ergänzen und in `songCardTemplate`/`initSongCard` statt der globalen
 Konstanten verwenden.
 
-## Jazz-Fusion-Seite (Coming Soon)
+## Jazz-Fusion-Seite
 
-`jazz.html` zeigt aktuell bewusst **keine echten Tracks** — im Repo lagen
-dafür bisher nur fünf erfundene Platzhalter-Titel („Blue Hour", „Midnight
-Sax" usw.) ohne echte Audiodateien und ohne echte Streaming-Links, reine
-Demo-Vorbereitung aus einer früheren Projektphase. Diese als echten Inhalt
-auf einer öffentlichen Seite zu zeigen wäre irreführend, deshalb zeigt
-`jazz.html` stattdessen einen kurzen „In Vorbereitung"-Hinweis mit Link
-zurück zur Startseite bzw. zur EDM-Seite, illustriert mit dem bereitgestellten
-Cover-Motiv (Arbeitstitel „Moments and Moods") — reine Ankündigungsgrafik,
-keine Behauptung über konkrete Tracks oder ein Erscheinungsdatum.
+`jazz.html` ist jetzt eine vollständige Player-Seite wie `edm.html` —
+vier echte Tracks aus der Reihe **„Moments and Moods"**, mit demselben
+30-Sekunden-Hard-Cap-Vorschauverhalten (danach dauerhaft Stopp + zwei
+Streaming-Buttons). Konfiguriert im `JAZZ_TRACKS`-Array in
+`assets/js/jazz.js`:
 
-Der vollständige Jazz-Player-Code (`assets/js/jazz.js`,
-`assets/css/jazz.css`, inkl. 30-Sekunden-Vorschau-Logik wie beim
-EDM-Player) bleibt unverändert im Repo erhalten. Sobald echte Jazz-Fusion-
-Tracks (Audiodateien + echte Spotify-/Apple-Music-Links) vorliegen, lässt
-sich die Seite darauf umstellen — analog zum Vorgehen bei den EDM-Tracks.
-Einfach Bescheid geben, sobald das Material da ist.
+- Echo (`echo.mp3`)
+- Fading Light (`fading-light.mp3`)
+- Sunday Feeling (`sunday-feeling.mp3`)
+- End of Summer (`end-of-summer.mp3`)
+
+Titel wurden aus den hochgeladenen Dateinamen abgeleitet (Versions-Suffixe
+wie `_2`/`_3` entfernt) — kurz gegenprüfen, falls das nicht die
+gewünschten offiziellen Titel sind.
+
+**Streaming-Links, ehrlich benannt:** Wie bei den EDM-Tracks bieten Apple
+Music und Spotify für HUK Fusion aktuell nur eine Artist-Seite an, keine
+einzelnen Song-Links — alle vier Jazz-Tracks verlinken deshalb vorerst auf
+dieselben zwei Artist-URLs (in `jazz.js` oben als `APPLE_MUSIC_URL`/
+`SPOTIFY_URL` gepflegt, identisch zu `main.js`). Sobald du die vier
+einzelnen Song-Links hast, einfach schicken — dann trage ich sie pro
+Track ein (`appleUrl`/`spotifyUrl`-Feld existiert schon je Track).
+
+Keine Likes/Kommentare auf dieser Seite (bewusst wie ursprünglich
+geplant, kein Supabase/Cookie nötig) — nur Player + Streaming-Buttons.
+Das Cover-Motiv „Moments and Moods" erscheint jetzt im Hero neben dem
+Text.
 
 ## Intro-Modus (nur auf der EDM-Seite)
 

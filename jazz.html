@@ -4,52 +4,74 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Jazz Fusion — HUK</title>
-<meta name="description" content="Jazz Fusion from the HUK studio: new productions are currently in the works. Coming soon." />
-<meta name="theme-color" content="#060606" />
-<meta name="robots" content="noindex" />
+<meta name="description" content="Moments and Moods: Jazz Fusion tracks from the HUK studio. Listen to a 30-second preview of each track, then head to Apple Music or Spotify." />
+<meta name="theme-color" content="#0b0b14" />
+
+<meta property="og:title" content="Jazz Fusion — HUK" />
+<meta property="og:description" content="Moments and Moods — Jazz Fusion tracks from the HUK studio." />
+<meta property="og:type" content="website" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%230b0b14'/%3E%3Ctext x='50' y='66' font-size='46' font-family='Arial,sans-serif' font-weight='700' fill='%23e8a13c' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-<link rel="stylesheet" href="assets/css/hub.css" />
+<link rel="stylesheet" href="assets/css/style.css" />
+<link rel="stylesheet" href="assets/css/jazz.css" />
 </head>
 <body>
 
-<header class="hub-nav">
-  <div class="hub-container">
-    <a href="index.html" class="hub-logo" style="text-decoration:none;">HUK</a>
-  </div>
+<!-- ============================== NAV ============================== -->
+<header class="nav" id="nav">
+  <a href="#top" class="nav__logo"><span class="dot" aria-hidden="true"></span>JAZZ FUSION</a>
+  <nav class="nav__links" id="navLinks">
+    <a href="index.html">← Home</a>
+    <a href="#tracks">Tracks</a>
+    <a href="edm.html">EDM</a>
+  </nav>
+  <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+    <span></span>
+  </button>
 </header>
 
-<main class="hub-container coming-soon">
-  <a href="index.html" class="coming-soon__back">← Home</a>
-  <div class="coming-soon__layout">
-    <img class="coming-soon__cover" src="assets/img/jazz-teaser.jpg" alt="Moments and Moods — Fusion Jazz by HUK, cover artwork" loading="lazy" />
-    <div>
-      <span class="coming-soon__badge">Coming Soon</span>
+<!-- ============================== JAZZ HERO ============================== -->
+<section class="jazz-hero" id="top">
+  <canvas class="hero__bg" id="heroCanvas" aria-hidden="true"></canvas>
+  <div class="hero__scrim" aria-hidden="true"></div>
+  <div class="container jazz-hero__grid">
+    <div class="jazz-hero__text">
+      <span class="section__kicker">Moments and Moods</span>
       <h1>Jazz Fusion</h1>
-      <p>Jazz harmony meets electronic texture. Under the working title <em>"Moments and Moods"</em>, the first productions are currently taking shape in the studio — dedicated tracks, a player, and song links will follow here once they're ready.</p>
-      <p>Until then: follow HUK Fusion on Spotify and Apple Music.</p>
-      <div class="coming-soon__streams">
-        <a class="stream-btn stream-btn--apple" href="https://music.apple.com/de/artist/huk-fusion/6803407059" target="_blank" rel="noopener">Open directly in the Apple Music Store</a>
-        <a class="stream-btn stream-btn--spotify" href="https://open.spotify.com/artist/5V0AuyekqjEpdtGwjL6m85" target="_blank" rel="noopener">Open directly in Spotify</a>
-      </div>
-      <p><a href="edm.html" style="color:inherit;">Or: listen to the EDM tracks →</a></p>
+      <p>Jazz harmony meets electronic texture. Four tracks from the studio — each plays a 30-second preview, then links straight through to Apple Music and Spotify.</p>
+    </div>
+    <img class="jazz-hero__cover" src="assets/img/jazz-teaser.jpg" alt="Moments and Moods — Fusion Jazz by HUK, cover artwork" loading="lazy" />
+  </div>
+</section>
+
+<!-- ============================== JAZZ GRID ============================== -->
+<section id="tracks">
+  <div class="container">
+    <div class="jazz-grid" id="jazzGrid">
+      <!-- Jazz cards are rendered by assets/js/jazz.js from the JAZZ_TRACKS config -->
     </div>
   </div>
-</main>
+</section>
 
-<footer class="hub-footer">
-  <div class="hub-container">
-    <small>© <span id="year"></span> HUK</small>
-    <nav class="hub-footer__legal">
+<!-- ============================== FOOTER ============================== -->
+<footer>
+  <div class="container footer__row">
+    <span class="footer__logo">JAZZ FUSION</span>
+    <small>© <span id="year"></span> HUK · Jazz Fusion</small>
+    <nav class="footer__legal">
       <a href="datenschutz.html">Privacy Policy</a>
       <a href="impressum.html">Legal Notice</a>
     </nav>
+    <a href="#top" class="back-to-top">↑ back to top</a>
   </div>
 </footer>
 
-<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/jazz.js"></script>
 </body>
 </html>
