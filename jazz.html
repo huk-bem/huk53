@@ -3,72 +3,47 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Jazz — HUK53</title>
-<meta name="description" content="Fünf Jazz-Stücke aus dem HUK53-Studio. 30 Sekunden anspielen, danach weiterhören auf Apple Music oder Spotify." />
-<meta name="theme-color" content="#0b0b14" />
-
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%230b0b14'/%3E%3Ctext x='50' y='66' font-size='46' font-family='Arial,sans-serif' font-weight='700' fill='%23e8a13c' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E" />
+<title>Jazz Fusion — HUK</title>
+<meta name="description" content="Jazz Fusion aus dem HUK-Studio: neue Produktionen entstehen aktuell. Bald verfügbar." />
+<meta name="theme-color" content="#060606" />
+<meta name="robots" content="noindex" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-<link rel="stylesheet" href="assets/css/style.css" />
-<link rel="stylesheet" href="assets/css/jazz.css" />
-<link rel="stylesheet" href="assets/css/intro.css" />
+<link rel="stylesheet" href="assets/css/hub.css" />
 </head>
 <body>
 
-<!-- ============================== NAV ============================== -->
-<header class="nav" id="nav">
-  <a href="index.html" class="nav__logo"><span class="dot" aria-hidden="true"></span>HUK53</a>
-  <nav class="nav__links" id="navLinks">
-    <a href="index.html#songs">Tracks</a>
-    <a href="jazz.html" class="nav__cta">Jazz</a>
-    <a href="index.html#about">Studio</a>
-  </nav>
-  <button class="nav__burger" id="navBurger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navLinks">
-    <span></span>
-  </button>
-</header>
-
-<!-- ============================== JAZZ HERO ============================== -->
-<section class="jazz-hero">
-  <canvas class="hero__bg" id="heroCanvas" aria-hidden="true"></canvas>
-  <div class="hero__scrim" aria-hidden="true"></div>
-  <div class="container jazz-hero__inner">
-    <span class="section__kicker">Anderer Vibe</span>
-    <h1>Fünf Jazz-Stücke</h1>
-    <p>Ruhiger als der Dancefloor: eine kleine Jazz-Auswahl aus dem HUK53-Studio. Jedes Stück läuft 30 Sekunden als Vorschau — danach kannst du auf Apple Music oder Spotify weiterhören.</p>
-  </div>
-</section>
-
-<!-- ============================== JAZZ GRID ============================== -->
-<section>
-  <div class="container">
-    <div class="jazz-grid" id="jazzGrid">
-      <!-- Jazz cards are rendered by assets/js/jazz.js from the JAZZ_TRACKS config -->
-    </div>
-  </div>
-</section>
-
-<!-- ============================== FOOTER ============================== -->
-<footer>
-  <div class="container footer__row">
-    <span class="footer__logo">HUK53</span>
-    <small>© <span id="year"></span> HUK53 Studio · Gig-geladene Dance-Musik</small>
-    <nav class="footer__legal">
+<header class="hub-nav">
+  <div class="hub-container">
+    <a href="index.html" class="hub-logo" style="text-decoration:none;">HUK</a>
+    <nav class="hub-nav__legal">
       <a href="datenschutz.html">Datenschutz</a>
       <a href="impressum.html">Impressum</a>
     </nav>
-    <a href="index.html#top" class="back-to-top">↑ zur Startseite</a>
+  </div>
+</header>
+
+<main class="hub-container coming-soon">
+  <a href="index.html" class="coming-soon__back">← Startseite</a>
+  <span class="coming-soon__badge">In Vorbereitung</span>
+  <h1>Jazz Fusion</h1>
+  <p>Jazz-Harmonik trifft auf elektronische Textur. Die ersten Produktionen entstehen aktuell im Studio — Tracks, Player und Streaming-Links folgen hier, sobald sie fertig sind.</p>
+  <p>In der Zwischenzeit: <a href="edm.html" style="color:inherit;">die EDM-Tracks anhören →</a></p>
+</main>
+
+<footer class="hub-footer">
+  <div class="hub-container">
+    <small>© <span id="year"></span> HUK</small>
+    <nav class="hub-footer__legal">
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="impressum.html">Impressum</a>
+    </nav>
   </div>
 </footer>
 
-<script src="assets/js/main.js"></script>
-<script src="assets/js/jazz.js"></script>
-<!-- Intro Mode: hidden owner toggle for background motif + autoplay soundtrack. See assets/js/intro.js. -->
-<script>window.HUK53_INTRO_TRACK = "assets/audio/jazz-blue-hour.mp3";</script>
-<script src="assets/js/intro.js"></script>
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 </body>
 </html>

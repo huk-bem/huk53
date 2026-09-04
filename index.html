@@ -3,106 +3,79 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>HUK FUSION EDM</title>
-<meta name="description" content="HUK FUSION EDM: Dance- und EDM-Produktionen aus dem HUK53-Studio, angereichert mit Crossover- und Fusion-Elementen. Aktuelle Tracks anhören, liken, kommentieren." />
-<meta name="theme-color" content="#0b0b14" />
+<title>HUK</title>
+<meta name="description" content="HUK — Musikprojekt zwischen EDM und Jazz Fusion. Aktuelle Tracks, Studio-Info und Kontakt." />
+<meta name="theme-color" content="#060606" />
 
-<meta property="og:title" content="HUK FUSION EDM" />
-<meta property="og:description" content="Dance, EDM, Crossover und Fusion — aktuelle Tracks aus dem HUK53-Studio. Hör rein, like, kommentier." />
+<meta property="og:title" content="HUK" />
+<meta property="og:description" content="Zwei Klangwelten, ein Studio: EDM und Jazz Fusion." />
 <meta property="og:type" content="website" />
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%230b0b14'/%3E%3Ctext x='50' y='66' font-size='46' font-family='Arial,sans-serif' font-weight='700' fill='%23ff2e92' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23060606'/%3E%3Ctext x='50' y='66' font-size='46' font-family='Arial,sans-serif' font-weight='700' fill='%23f3f1ec' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-<link rel="stylesheet" href="assets/css/style.css" />
-<link rel="stylesheet" href="assets/css/intro.css" />
-<link rel="stylesheet" href="assets/css/consent.css" />
+<link rel="stylesheet" href="assets/css/hub.css" />
 </head>
 <body>
 
-<!-- ============================== NAV ============================== -->
-<header class="nav" id="nav">
-  <a href="#top" class="nav__logo"><span class="dot" aria-hidden="true"></span>HUK FUSION EDM</a>
-  <nav class="nav__links" id="navLinks">
-    <a href="#songs">Tracks</a>
-    <a href="#about">Studio</a>
-  </nav>
-  <button class="nav__burger" id="navBurger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navLinks">
-    <span></span>
-  </button>
+<header class="hub-nav">
+  <div class="hub-container">
+    <span class="hub-logo">HUK</span>
+    <nav class="hub-nav__legal">
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="impressum.html">Impressum</a>
+    </nav>
+  </div>
 </header>
 
-<!-- ============================== HERO ============================== -->
-<section class="hero" id="top">
-  <canvas class="hero__bg" id="heroCanvas" aria-hidden="true"></canvas>
-  <div class="hero__scrim" aria-hidden="true"></div>
+<main>
+  <section class="hub-intro hub-container">
+    <p class="hub-kicker">Musikstudio</p>
+    <h1>Zwei Klangwelten. Ein Studio.</h1>
+    <p class="hub-lede">Elektronische Musik zwischen Tanzfläche und Improvisation — sachlich produziert. Zwei Bereiche, ein Ursprung.</p>
+  </section>
 
-  <span class="hero__eyebrow">🎛️ Dance · EDM · Fusion</span>
-  <h1><span class="hero__title-line">HUK FUSION</span><span class="hero__title-line">EDM</span></h1>
-  <p class="hero__tagline">Dance- und EDM-Produktionen aus dem HUK53-Studio — mit Crossover- und Fusion-Elementen.</p>
+  <section class="hub-grid">
+    <a class="hub-tile hub-tile--edm" href="edm.html">
+      <div class="hub-tile__media">
+        <img src="assets/img/edm-teaser.gif" alt="HUK Fusion EDM — Cover-Motiv" loading="lazy" />
+      </div>
+      <div class="hub-tile__body">
+        <span class="hub-tile__kicker">01 — Bereich</span>
+        <h2>EDM</h2>
+        <p>Klare Beats, präzise Produktion: Dance, EDM und Crossover aus dem Studio. Aktuelle Tracks zum Anhören, direkt verlinkt zu Spotify und Apple Music.</p>
+        <span class="hub-tile__cta">Zu den Tracks →</span>
+      </div>
+    </a>
 
-  <div class="hero__actions">
-    <a href="#songs" class="btn btn--primary">🎧 Tracks hören</a>
-  </div>
+    <a class="hub-tile hub-tile--jazz" href="jazz.html">
+      <div class="hub-tile__media" aria-hidden="true">
+        <svg viewBox="0 0 200 120" fill="none" stroke="#f3f1ec" stroke-width="1">
+          <g opacity="0.55">
+            <path d="M0 60 C 20 40, 30 40, 40 60 S 60 80, 70 60 90 40, 100 60 120 80, 130 60 150 40, 160 60 180 80, 200 60" />
+            <path d="M0 60 C 20 75, 30 75, 40 60 S 60 45, 70 60 90 75, 100 60 120 45, 130 60 150 75, 160 60 180 45, 200 60" opacity="0.5" />
+          </g>
+          <circle cx="100" cy="60" r="46" opacity="0.25" />
+          <circle cx="100" cy="60" r="34" opacity="0.2" />
+        </svg>
+      </div>
+      <div class="hub-tile__body">
+        <span class="hub-tile__kicker">02 — Bereich</span>
+        <h2>Jazz Fusion</h2>
+        <p>Jazz-Harmonik trifft auf elektronische Textur. Neue Produktionen entstehen aktuell im Studio.</p>
+        <span class="hub-tile__cta">In Vorbereitung →</span>
+      </div>
+    </a>
+  </section>
+</main>
 
-  <div class="hero__eq" aria-hidden="true">
-    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-  </div>
-
-  <a href="#songs" class="hero__scroll" aria-hidden="true">
-    scroll
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-  </a>
-</section>
-
-<div class="marquee" aria-hidden="true">
-  <div class="marquee__track">
-    <span>DANCE · EDM · CROSSOVER · FUSION ·</span><span>DANCE · EDM · CROSSOVER · FUSION ·</span>
-    <span>DANCE · EDM · CROSSOVER · FUSION ·</span><span>DANCE · EDM · CROSSOVER · FUSION ·</span>
-  </div>
-</div>
-
-<!-- ============================== SONGS ============================== -->
-<section id="songs">
-  <div class="container">
-    <div class="section__head">
-      <span class="section__kicker">Fresh Cuts</span>
-      <h2>Aktuelle Tracks aus dem Studio.</h2>
-      <p>Dance, EDM und alles dazwischen — die aktuellen Cuts aus dem HUK53-Studio. Hör rein, lass ein Like da und schreib, was du hörst.</p>
-    </div>
-
-    <div class="songs__grid" id="songsGrid">
-      <!-- Song cards are rendered by assets/js/main.js from the SONGS config -->
-    </div>
-  </div>
-</section>
-
-<!-- ============================== ABOUT ============================== -->
-<section id="about">
-  <div class="container about__grid">
-    <div class="about__text">
-      <span class="section__kicker">Das Studio</span>
-      <h2 style="margin-bottom:1.1rem;">HUK FUSION EDM verbindet klare Dance-Energie mit Crossover-Elementen.</h2>
-      <p>HUK FUSION EDM steht für Dance- und EDM-Produktionen aus dem HUK53-Studio: tanzbare Grundstrukturen, angereichert mit Elementen aus Crossover und Fusion.</p>
-      <p>Von der ersten Idee bis zum fertigen Mix entsteht die Musik direkt im Studio — mit Liebe zum Detail und einem Ohr für ungewöhnliche Klangkombinationen.</p>
-    </div>
-    <div class="about__stats">
-      <div class="stat"><strong data-count="128">0</strong><span>BPM Peak</span></div>
-      <div class="stat"><strong data-count="6">0</strong><span>Tracks</span></div>
-      <div class="stat"><strong data-count="3">0</strong><span>Genres im Mix</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================== FOOTER ============================== -->
-<footer>
-  <div class="container footer__row">
-    <span class="footer__logo">HUK FUSION EDM</span>
-    <small>© <span id="year"></span> HUK FUSION EDM · ein Projekt des HUK53-Studios</small>
-    <div class="booking__socials" aria-label="Social Media">
+<footer class="hub-footer">
+  <div class="hub-container">
+    <small>© <span id="year"></span> HUK</small>
+    <div class="hub-footer__socials" aria-label="Social Media">
       <a href="https://instagram.com/huk53" target="_blank" rel="noopener" aria-label="Instagram">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
       </a>
@@ -113,25 +86,13 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg>
       </a>
     </div>
-    <nav class="footer__legal">
+    <nav class="hub-footer__legal">
       <a href="datenschutz.html">Datenschutz</a>
       <a href="impressum.html">Impressum</a>
     </nav>
-    <a href="#top" class="back-to-top">↑ nach oben</a>
   </div>
 </footer>
 
-<!-- Likes/Kommentare: Supabase-Projekt (siehe README.md "Likes & Kommentare (Supabase)").
-     Beide Werte sind bewusst öffentlich/sicher einzubetten — siehe dortige Erklärung. -->
-<script>
-  window.HUK53_SUPABASE_URL = "https://vmjivwfieyfnlcejkktu.supabase.co";
-  window.HUK53_SUPABASE_ANON_KEY = "sb_publishable_i35To_pJC-7evKXrk4Oqhw_m14vwlOf";
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="assets/js/consent.js"></script>
-<script src="assets/js/main.js"></script>
-<!-- Intro Mode: hidden owner toggle for background motif + autoplay soundtrack. See assets/js/intro.js. -->
-<script>window.HUK53_INTRO_TRACK = "assets/audio/back-on-track.mp3";</script>
-<script src="assets/js/intro.js"></script>
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 </body>
 </html>

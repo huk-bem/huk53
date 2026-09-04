@@ -10,7 +10,7 @@
    functionally needs the id) stays off. See datenschutz.html.
 
    Requires two values set on `window` BEFORE this script loads (see
-   index.html): HUK53_SUPABASE_URL and HUK53_SUPABASE_ANON_KEY (both are
+   edm.html): HUK53_SUPABASE_URL and HUK53_SUPABASE_ANON_KEY (both are
    public-by-design values from Supabase — see README). Until both are
    set, the API-dependent features degrade gracefully (see main.js).
    ========================================================================== */

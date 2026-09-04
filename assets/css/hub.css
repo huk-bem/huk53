@@ -1,0 +1,340 @@
+/* ==========================================================================
+   HUK — Hub / Distributor page + Coming-Soon pages
+   Deliberately calmer than assets/css/style.css (the EDM sub-page): mostly
+   black/white, one restrained accent color, no motion, no gradients. Used
+   by index.html (hub) and jazz.html (coming soon).
+   ========================================================================== */
+
+:root {
+  --hub-bg: #060606;
+  --hub-fg: #f3f1ec;
+  --hub-fg-dim: #8d8a84;
+  --hub-border: rgba(243, 241, 236, 0.14);
+  --hub-accent: #e0316b; /* used sparingly: one thin rule, hover state, kicker */
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: var(--hub-bg);
+  color: var(--hub-fg);
+  font-family: "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.hub-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
+}
+
+/* ---- Nav ---- */
+
+.hub-nav {
+  padding: clamp(1.5rem, 4vw, 2.5rem) 0 0;
+}
+
+.hub-nav .hub-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hub-logo {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.28em;
+  color: var(--hub-fg);
+  text-decoration: none;
+}
+
+.hub-nav__legal {
+  display: flex;
+  gap: 1.4rem;
+}
+
+.hub-nav__legal a {
+  color: var(--hub-fg-dim);
+  text-decoration: none;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+}
+.hub-nav__legal a:hover { color: var(--hub-fg); }
+
+/* ---- Intro ---- */
+
+.hub-intro {
+  padding: clamp(3.5rem, 10vw, 6.5rem) 0 clamp(2.5rem, 6vw, 4rem);
+  max-width: 640px;
+}
+
+.hub-kicker {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--hub-accent);
+  margin: 0 0 1.1rem;
+}
+
+.hub-intro h1 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(1.9rem, 4.4vw, 2.9rem);
+  line-height: 1.15;
+  font-weight: 700;
+  margin: 0 0 1rem;
+  letter-spacing: -0.01em;
+}
+
+.hub-lede {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--hub-fg-dim);
+  margin: 0;
+}
+
+/* ---- Tile grid ---- */
+
+.hub-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--hub-border);
+  border-left: 1px solid var(--hub-border);
+}
+
+.hub-tile {
+  border-right: 1px solid var(--hub-border);
+  border-bottom: 1px solid var(--hub-border);
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  text-decoration: none;
+  color: inherit;
+  min-height: clamp(360px, 46vw, 480px);
+  position: relative;
+  transition: background 0.25s ease;
+}
+
+.hub-tile:hover { background: rgba(255, 255, 255, 0.025); }
+
+.hub-tile__media {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #000;
+}
+
+.hub-tile__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.85);
+  transition: transform 0.5s ease;
+}
+
+.hub-tile:hover .hub-tile__media img { transform: scale(1.03); }
+
+.hub-tile__media svg { width: 78%; height: auto; opacity: 0.85; }
+
+.hub-tile__kicker {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--hub-fg-dim);
+}
+
+.hub-tile__body h2 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(1.5rem, 3vw, 1.9rem);
+  margin: 0.4rem 0 0.7rem;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+}
+
+.hub-tile__body p {
+  margin: 0 0 1.1rem;
+  color: var(--hub-fg-dim);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  max-width: 46ch;
+}
+
+.hub-tile__cta {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-bottom: 1px solid var(--hub-border);
+  padding-bottom: 0.2rem;
+  align-self: flex-start;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.hub-tile:hover .hub-tile__cta {
+  color: var(--hub-accent);
+  border-color: var(--hub-accent);
+}
+
+.hub-tile--jazz .hub-tile__media { background: #050505; }
+
+@media (max-width: 760px) {
+  .hub-grid { grid-template-columns: 1fr; }
+  .hub-tile { min-height: 300px; }
+}
+
+/* ---- Footer (shared by hub + coming-soon pages) ---- */
+
+.hub-footer {
+  border-top: 1px solid var(--hub-border);
+  padding: clamp(1.6rem, 4vw, 2.2rem) 0;
+  margin-top: clamp(2rem, 5vw, 3rem);
+}
+
+.hub-footer .hub-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.hub-footer small {
+  color: var(--hub-fg-dim);
+  font-size: 0.76rem;
+}
+
+.hub-footer__socials {
+  display: flex;
+  gap: 0.9rem;
+}
+
+.hub-footer__socials a {
+  color: var(--hub-fg-dim);
+  transition: color 0.2s ease;
+}
+.hub-footer__socials a:hover { color: var(--hub-fg); }
+.hub-footer__socials svg { width: 17px; height: 17px; }
+
+.hub-footer__legal {
+  display: flex;
+  gap: 1.2rem;
+}
+.hub-footer__legal a {
+  color: var(--hub-fg-dim);
+  text-decoration: none;
+  font-size: 0.78rem;
+}
+.hub-footer__legal a:hover { color: var(--hub-fg); }
+
+/* ---- Coming-soon sub-page (jazz.html) ---- */
+
+.coming-soon {
+  min-height: 62vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(2rem, 6vw, 3rem) 0;
+}
+
+.coming-soon__back {
+  color: var(--hub-fg-dim);
+  text-decoration: none;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  margin-bottom: clamp(2rem, 6vw, 3.5rem);
+  display: inline-flex;
+  width: fit-content;
+}
+.coming-soon__back:hover { color: var(--hub-fg); }
+
+.coming-soon__badge {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--hub-accent);
+  border: 1px solid var(--hub-border);
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  display: inline-block;
+  width: fit-content;
+  margin-bottom: 1.3rem;
+}
+
+.coming-soon h1 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(2.2rem, 6vw, 3.6rem);
+  font-weight: 700;
+  margin: 0 0 1.1rem;
+  letter-spacing: -0.01em;
+}
+
+.coming-soon p {
+  color: var(--hub-fg-dim);
+  font-size: 1rem;
+  line-height: 1.65;
+  max-width: 56ch;
+  margin: 0 0 0.6rem;
+}
+
+/* ---- Legal pages (Impressum / Datenschutz) ---- */
+
+.hub-legal {
+  padding: clamp(2rem, 6vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+}
+
+.hub-legal__intro {
+  color: var(--hub-fg-dim);
+  font-size: 0.85rem;
+  margin: -0.4rem 0 2.2rem;
+}
+
+.hub-legal h1 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  margin: 0 0 0.6rem;
+  font-weight: 700;
+}
+
+.hub-legal section {
+  border-top: 1px solid var(--hub-border);
+  padding: 1.6rem 0;
+}
+
+.hub-legal section:last-child { border-bottom: 1px solid var(--hub-border); }
+
+.hub-legal h2 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.05rem;
+  margin: 0 0 0.7rem;
+}
+
+.hub-legal p, .hub-legal li {
+  color: var(--hub-fg-dim);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.hub-legal a { color: var(--hub-fg); }
+
+.hub-legal__todo {
+  border: 1px solid var(--hub-border);
+  border-radius: 4px;
+  padding: 1rem 1.2rem;
+  font-size: 0.85rem;
+  color: var(--hub-fg-dim);
+  margin-bottom: 2rem;
+}
+.hub-legal__todo strong { color: var(--hub-fg); }

@@ -2,7 +2,7 @@
    HUK FUSION EDM — One-Pager Logic
    Player + hero + stats are plain vanilla JS. Likes/comments are backed by
    a small Supabase project (see assets/js/consent.js for the client setup
-   and window.HUK53_SUPABASE_URL/ANON_KEY in index.html) — real, shared,
+   and window.HUK53_SUPABASE_URL/ANON_KEY in edm.html) — real, shared,
    persistent storage, gated behind the cookie-consent banner since posting
    a like/comment needs the anonymous visitor id that cookie provides.
    ========================================================================== */
@@ -284,8 +284,8 @@
         <div class="song-card__links" data-role="stream-links">
           <span class="song-card__links-label">Vorschau beendet — weiterhören auf</span>
           <div class="song-card__link-row">
-            <a class="stream-btn stream-btn--apple" href="${APPLE_MUSIC_URL}" target="_blank" rel="noopener">🍎 Apple Music</a>
-            <a class="stream-btn stream-btn--spotify" href="${SPOTIFY_URL}" target="_blank" rel="noopener">🎧 Spotify</a>
+            <a class="stream-btn stream-btn--apple" href="${APPLE_MUSIC_URL}" target="_blank" rel="noopener">Direkt im Apple Music Store öffnen</a>
+            <a class="stream-btn stream-btn--spotify" href="${SPOTIFY_URL}" target="_blank" rel="noopener">Direkt in Spotify öffnen</a>
           </div>
         </div>
       </div>
