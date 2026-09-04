@@ -247,6 +247,24 @@ html, body {
   padding: clamp(2rem, 6vw, 3rem) 0;
 }
 
+.coming-soon__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 340px) 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+.coming-soon__cover {
+  width: 100%;
+  border-radius: 6px;
+  display: block;
+}
+
+@media (max-width: 760px) {
+  .coming-soon__layout { grid-template-columns: 1fr; }
+  .coming-soon__cover { max-width: 320px; }
+}
+
 .coming-soon__back {
   color: var(--hub-fg-dim);
   text-decoration: none;

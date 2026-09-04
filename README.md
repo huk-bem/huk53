@@ -36,7 +36,8 @@ assets/js/main.js       EDM: Player, Likes/Kommentare (Supabase), Animationen
 assets/js/consent.js    Cookie-Banner + Supabase-Client + Besuchskennung (nur auf edm.html)
 assets/js/intro.js      Intro-Modus: Hintergrund-Motiv + Autoplay-Soundtrack (nur auf edm.html)
 assets/js/jazz.js       Voller Jazz-Player — aktuell ungenutzt, siehe unten
-assets/img/edm-teaser.gif  Cover-Motiv für die EDM-Kachel auf der Startseite
+assets/img/edm-teaser.gif   Cover-Motiv für die EDM-Kachel auf der Startseite
+assets/img/jazz-teaser.jpg  Cover-Motiv ("Moments and Moods") für Jazz-Fusion-Kachel + Coming-Soon-Seite
 assets/audio/           MP3-Dateien (siehe README dort für Status pro Track)
 ```
 
@@ -83,7 +84,9 @@ Sax" usw.) ohne echte Audiodateien und ohne echte Streaming-Links, reine
 Demo-Vorbereitung aus einer früheren Projektphase. Diese als echten Inhalt
 auf einer öffentlichen Seite zu zeigen wäre irreführend, deshalb zeigt
 `jazz.html` stattdessen einen kurzen „In Vorbereitung"-Hinweis mit Link
-zurück zur Startseite bzw. zur EDM-Seite.
+zurück zur Startseite bzw. zur EDM-Seite, illustriert mit dem bereitgestellten
+Cover-Motiv (Arbeitstitel „Moments and Moods") — reine Ankündigungsgrafik,
+keine Behauptung über konkrete Tracks oder ein Erscheinungsdatum.
 
 Der vollständige Jazz-Player-Code (`assets/js/jazz.js`,
 `assets/css/jazz.css`, inkl. 30-Sekunden-Vorschau-Logik wie beim
