@@ -46,6 +46,22 @@ echten Werte anpassen. Weitere Tracks lassen sich genauso ergänzen: Datei
 nach `assets/audio/` legen und einen neuen Eintrag im `SONGS`-Array
 anlegen (auf eindeutige `id`/Titel achten, um Dopplungen zu vermeiden).
 
+**30-Sekunden-Vorschau + Streaming-Links:** Jeder Track lässt sich pro
+Seitenaufruf einmal anspielen — nach 30 Sekunden (oder früher, falls die
+Datei kürzer ist) stoppt die Wiedergabe endgültig und zwei Buttons
+erscheinen: „Apple Music" und „Spotify". Da Apple Music und Spotify für
+HUK Fusion aktuell nur eine Artist-Seite anbieten (keine einzelnen
+Song-Deeplinks), verlinken beide Buttons auf dieselben zwei Artist-Links,
+oben im `main.js` als `APPLE_MUSIC_URL`/`SPOTIFY_URL` gepflegt:
+
+- Apple Music: https://music.apple.com/de/artist/huk-fusion/6803407059
+- Spotify: https://open.spotify.com/artist/5V0AuyekqjEpdtGwjL6m85
+
+Sollten später einzelne Song-Links verfügbar sein, lässt sich das leicht
+umstellen: pro Track im `SONGS`-Array ein `appleUrl`/`spotifyUrl`-Feld
+ergänzen und in `songCardTemplate`/`initSongCard` statt der globalen
+Konstanten verwenden.
+
 ## Jazz-Seite (ausgeblendet)
 
 `jazz.html` ist aktuell **komplett ausgeblendet** — kein Link mehr im Nav

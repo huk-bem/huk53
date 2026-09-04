@@ -538,6 +538,12 @@ section { position: relative; padding: clamp(4.5rem, 9vw, 7.5rem) 0; }
 .play-btn:hover { transform: scale(1.07); }
 .play-btn:active { transform: scale(0.94); }
 
+.play-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
 .play-btn svg { width: 18px; height: 18px; }
 .play-btn .icon-pause { display: none; }
 .song-card.is-playing .play-btn .icon-play { display: none; }
@@ -601,6 +607,57 @@ section { position: relative; padding: clamp(4.5rem, 9vw, 7.5rem) 0; }
   color: var(--text-faint);
   line-height: 1.5;
 }
+
+/* Post-preview streaming links (Apple Music / Spotify) — shown once the
+   30-second preview cap is reached, see assets/js/main.js. */
+
+.song-card__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s var(--ease), opacity 0.3s var(--ease);
+}
+
+.song-card__links.is-visible {
+  max-height: 200px;
+  opacity: 1;
+  margin-top: 0.2rem;
+}
+
+.song-card__links-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.song-card__link-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+.stream-btn {
+  flex: 1;
+  min-width: 130px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  border: 1px solid var(--card-border);
+  transition: transform 0.15s var(--ease), border-color 0.2s;
+}
+.stream-btn:hover { transform: translateY(-2px); }
+
+.stream-btn--apple { background: #fff; color: #111; }
+.stream-btn--apple:hover { border-color: #fff; }
+
+.stream-btn--spotify { background: #1ed760; color: #06210f; }
+.stream-btn--spotify:hover { border-color: #1ed760; }
 
 /* Feedback column */
 

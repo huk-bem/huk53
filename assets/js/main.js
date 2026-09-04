@@ -25,7 +25,18 @@
    * and shared (see section 4b below), inventing fake starter numbers or
    * fictional reviewer quotes would misrepresent genuine audience
    * feedback — every like and comment shown is now a real one.
+   *
+   * Streaming links: Apple Music / Spotify only publish an artist-level
+   * page for HUK Fusion (no separate per-song deep links are available),
+   * so every track points to the same two artist URLs below. Preview
+   * playback is hard-capped at PREVIEW_SECONDS — once reached (or once
+   * the file ends, if shorter), playback stops for good and the two
+   * streaming buttons appear.
    * ------------------------------------------------------------------ */
+  const PREVIEW_SECONDS = 30;
+  const APPLE_MUSIC_URL = "https://music.apple.com/de/artist/huk-fusion/6803407059";
+  const SPOTIFY_URL = "https://open.spotify.com/artist/5V0AuyekqjEpdtGwjL6m85";
+
   const SONGS = [
     { id: "back-on-track", title: "Back on Track", genre: "Dance / EDM", bpm: 126, audioSrc: "assets/audio/back-on-track.mp3" },
     { id: "sonar", title: "Sonar", genre: "Dance / Techno", bpm: 130, audioSrc: "assets/audio/sonar.mp3" },
@@ -251,7 +262,7 @@
         </div>
 
         <div class="song-card__controls">
-          <button class="play-btn" type="button" aria-label="${song.title} abspielen">
+          <button class="play-btn" type="button" aria-label="${song.title} anspielen (30 Sekunden Vorschau)">
             <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
           </button>
@@ -261,14 +272,22 @@
             </div>
             <div class="song-card__times">
               <span data-role="time-current">0:00</span>
-              <span data-role="time-total">–:–</span>
+              <span data-role="time-total">0:${String(PREVIEW_SECONDS).padStart(2, "0")}</span>
             </div>
           </div>
         </div>
 
         <div class="waveform" aria-hidden="true">${buildWaveform()}</div>
 
-        <p class="song-card__note" data-role="mode-note">Lädt Vorschau …</p>
+        <p class="song-card__note" data-role="mode-note">30-Sekunden-Vorschau — lädt …</p>
+
+        <div class="song-card__links" data-role="stream-links">
+          <span class="song-card__links-label">Vorschau beendet — weiterhören auf</span>
+          <div class="song-card__link-row">
+            <a class="stream-btn stream-btn--apple" href="${APPLE_MUSIC_URL}" target="_blank" rel="noopener">🍎 Apple Music</a>
+            <a class="stream-btn stream-btn--spotify" href="${SPOTIFY_URL}" target="_blank" rel="noopener">🎧 Spotify</a>
+          </div>
+        </div>
       </div>
 
       <div class="song-card__feedback">
@@ -298,68 +317,88 @@
   function initSongCard(song) {
     const card = document.getElementById(`card-${song.id}`);
     const playBtn = card.querySelector(".play-btn");
-    const progressWrap = card.querySelector('[data-role="progress"]');
     const progressFill = card.querySelector('[data-role="progress-fill"]');
     const timeCurrent = card.querySelector('[data-role="time-current"]');
-    const timeTotal = card.querySelector('[data-role="time-total"]');
     const modeNote = card.querySelector('[data-role="mode-note"]');
+    const streamLinks = card.querySelector('[data-role="stream-links"]');
     const likeBtn = card.querySelector('[data-role="like-btn"]');
     const likeCountEl = card.querySelector('[data-role="like-count"]');
     const commentsEl = card.querySelector('[data-role="comments"]');
     const commentCountLabel = card.querySelector('[data-role="comment-count-label"]');
     const commentForm = card.querySelector('[data-role="comment-form"]');
 
-    /* --- Player: real <audio> first, synthesized loop as fallback --- */
+    /* --- Player: real <audio> first, synthesized loop as fallback ---
+       One-shot 30-second preview per track per page load (see
+       PREVIEW_SECONDS above) — mirrors the previous Jazz-page behaviour.
+       After the cap (or if the file itself is shorter), playback stops
+       for good and the Apple Music / Spotify buttons appear. */
     const audio = new Audio();
-    audio.loop = true;
     audio.preload = "none";
     let mode = "pending"; // "file" | "demo"
     let rafId = null;
     let synth = null; // active demo synth handle
+    let previewUsed = false; // once true, no further playback is allowed
 
     audio.addEventListener("error", () => {
       if (mode !== "file") switchToDemoMode();
     });
     audio.addEventListener("loadedmetadata", () => {
       mode = "file";
-      timeTotal.textContent = formatTime(audio.duration);
-      modeNote.textContent = "🎵 Live-Track";
+      modeNote.textContent = "🎵 Live-Track — 30 Sekunden Vorschau";
     });
     audio.src = song.audioSrc;
     audio.load();
 
     function switchToDemoMode() {
       mode = "demo";
-      timeTotal.textContent = "loop";
-      modeNote.textContent = "🔊 Preview-Loop (Demo — echte MP3 in assets/audio/ ablegen für Live-Sound)";
+      modeNote.textContent = "🔊 Vorschau-Loop (Demo — echte MP3 in assets/audio/ ablegen) — 30 Sekunden";
     }
     // If no metadata arrives quickly (no file present), assume demo mode.
     setTimeout(() => { if (mode === "pending") switchToDemoMode(); }, 900);
 
-    function stopAll() {
-      card.classList.remove("is-playing");
+    function stopEngines() {
       audio.pause();
       if (synth) { synth.stop(); synth = null; }
       if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
     }
 
-    function tickFile() {
-      const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+    function stopAll() {
+      card.classList.remove("is-playing");
+      stopEngines();
+    }
+
+    function endPreviewForGood() {
+      stopAll();
+      previewUsed = true;
+      progressFill.style.width = "100%";
+      timeCurrent.textContent = formatTime(PREVIEW_SECONDS);
+      playBtn.disabled = true;
+      playBtn.setAttribute("aria-label", `${song.title}: Vorschau beendet`);
+      modeNote.textContent = "✅ Vorschau abgeschlossen.";
+      streamLinks.classList.add("is-visible");
+    }
+
+    function tickFile(startedAt) {
+      const elapsed = (performance.now() - startedAt) / 1000;
+      if (elapsed >= PREVIEW_SECONDS) { endPreviewForGood(); return; }
+      const pct = (elapsed / PREVIEW_SECONDS) * 100;
       progressFill.style.width = `${pct}%`;
-      timeCurrent.textContent = formatTime(audio.currentTime);
-      rafId = requestAnimationFrame(tickFile);
+      timeCurrent.textContent = formatTime(elapsed);
+      rafId = requestAnimationFrame(() => tickFile(startedAt));
     }
 
     function tickDemo(startedAt) {
-      const loopMs = (60000 / song.bpm) * 16; // 16 beats ≈ 4 bars per loop
-      const elapsedTotal = (performance.now() - startedAt) / 1000;
-      const elapsedLoop = ((performance.now() - startedAt) % loopMs) / loopMs;
-      progressFill.style.width = `${elapsedLoop * 100}%`;
-      timeCurrent.textContent = formatTime(elapsedTotal);
+      const elapsed = (performance.now() - startedAt) / 1000;
+      if (elapsed >= PREVIEW_SECONDS) { endPreviewForGood(); return; }
+      const pct = (elapsed / PREVIEW_SECONDS) * 100;
+      progressFill.style.width = `${pct}%`;
+      timeCurrent.textContent = formatTime(elapsed);
       rafId = requestAnimationFrame(() => tickDemo(startedAt));
     }
 
     playBtn.addEventListener("click", () => {
+      if (previewUsed) return; // no replays once the 30s preview has run
+
       const willPlay = !card.classList.contains("is-playing");
 
       // Only one song plays at a time.
@@ -373,28 +412,29 @@
       }
 
       card.classList.add("is-playing");
+      const startedAt = performance.now();
 
       if (mode === "demo") {
         synth = createDemoLoop(song.bpm);
-        tickDemo(performance.now());
+        tickDemo(startedAt);
       } else {
         audio.currentTime = 0;
-        audio.play().then(() => tickFile()).catch(() => {
+        audio.play().then(() => tickFile(startedAt)).catch(() => {
           switchToDemoMode();
           synth = createDemoLoop(song.bpm);
-          tickDemo(performance.now());
+          tickDemo(startedAt);
+        });
+        // Belt-and-braces: also stop on the audio's own end event if it's
+        // shorter than 30s, and on the browser's native timeupdate so the
+        // cap holds even if rAF throttles in a background tab.
+        audio.addEventListener("ended", () => { if (!previewUsed) endPreviewForGood(); });
+        audio.addEventListener("timeupdate", () => {
+          if (!previewUsed && audio.currentTime >= PREVIEW_SECONDS) endPreviewForGood();
         });
       }
     });
 
     card.addEventListener("huk53:stop", stopAll);
-
-    progressWrap.addEventListener("click", (e) => {
-      if (mode !== "file" || !audio.duration) return; // seeking only meaningful for real files
-      const rect = progressWrap.getBoundingClientRect();
-      const pct = (e.clientX - rect.left) / rect.width;
-      audio.currentTime = pct * audio.duration;
-    });
 
     /* --- Likes & Comments (Supabase, cookie-consent-gated) --- */
     let likeState = { liked: false, count: null };
