@@ -10,6 +10,10 @@ ein kleines, direkt angebundenes Supabase-Projekt.
 
 Veröffentlicht via GitHub Pages: https://huk-bem.github.io/huk53/
 
+**Sprache:** Alle Seiteninhalte (Texte, Buttons, Formulare, Impressum/
+Datenschutz) sind auf **Englisch**. Diese README bleibt zur Pflege auf
+Deutsch.
+
 ## Vorherige Version (archiviert)
 
 Die bisherige, reißerischere One-Pager-Version (großer Hero, Neon-Farben,
@@ -62,8 +66,9 @@ Weitere Tracks: Datei nach `assets/audio/` legen, neuen Eintrag im
 **30-Sekunden-Vorschau + Streaming-Links:** Jeder Track lässt sich pro
 Seitenaufruf einmal anspielen — nach 30 Sekunden (oder früher, falls die
 Datei kürzer ist) stoppt die Wiedergabe endgültig und zwei Buttons
-erscheinen: „Direkt in Spotify öffnen" und „Direkt im Apple Music Store
-öffnen". Da Apple Music und Spotify für HUK Fusion aktuell nur eine
+erscheinen: „Open directly in Spotify" und „Open directly in the Apple
+Music Store" (Website-Texte sind jetzt komplett auf Englisch, siehe
+unten). Da Apple Music und Spotify für HUK Fusion aktuell nur eine
 Artist-Seite anbieten (keine einzelnen Song-Deeplinks), verlinken beide
 Buttons auf dieselben zwei Artist-Links, oben im `main.js` als
 `APPLE_MUSIC_URL`/`SPOTIFY_URL` gepflegt:
@@ -127,16 +132,18 @@ startenden, loopenden Soundtrack. Details in `assets/js/intro.js`
   startet die Wiedergabe automatisch beim ersten Klick/Tastendruck
   irgendwo auf der Seite (sofern nicht zwischenzeitlich stummgeschaltet).
 
-## Impressum & Datenschutz
+## Legal Notice & Privacy Policy (Impressum & Datenschutz)
 
-`impressum.html` und `datenschutz.html` sind verlinkt im Footer jeder
-Seite und im dezenten Hub-Design gehalten. Beide sind mit den echten
-Studio-Angaben ausgefüllt (siehe `impressum.html` für die offen
-gebliebenen Kleinigkeiten wie USt-ID). `datenschutz.html` beschreibt
-Hosting (GitHub Pages + Supabase), Google Fonts sowie das Cookie und die
-Datenbank-Speicherung für Likes/Kommentare — und weist klar darauf hin,
-dass das nur den EDM-Bereich betrifft (Startseite und Jazz-Fusion-Seite
-setzen kein Cookie).
+Dateinamen bleiben unverändert (`impressum.html`, `datenschutz.html`),
+Inhalt und Überschriften sind jetzt auf Englisch: „Legal Notice" bzw.
+„Privacy Policy". Beide sind **nur noch im Footer** jeder Seite verlinkt
+(nicht mehr zusätzlich im Header-Nav) und im dezenten Hub-Design gehalten.
+Beide sind mit den echten Studio-Angaben ausgefüllt (siehe `impressum.html`
+für die offen gebliebenen Kleinigkeiten wie USt-ID). `datenschutz.html`
+beschreibt Hosting (GitHub Pages + Supabase), Google Fonts sowie das
+Cookie und die Datenbank-Speicherung für Likes/Kommentare — und weist
+klar darauf hin, dass das nur den EDM-Bereich betrifft (Startseite und
+Jazz-Fusion-Seite setzen kein Cookie).
 
 ## Feedback-Spalte (Likes & Kommentare, Supabase, nur auf der EDM-Seite)
 

@@ -79,7 +79,7 @@
 
   function updateSoundButton(btn) {
     btn.innerHTML = userMuted ? "🔇" : "🔊";
-    btn.setAttribute("aria-label", userMuted ? "Soundtrack einschalten" : "Soundtrack stummschalten");
+    btn.setAttribute("aria-label", userMuted ? "Turn on soundtrack" : "Mute soundtrack");
   }
 
   function attemptPlay() {
@@ -134,16 +134,16 @@
     el.className = "intro-settings-bar";
     el.innerHTML = `
       <div class="intro-settings-bar__head">
-        <strong>🔧 Intro-Einstellungen</strong>
-        <button type="button" class="intro-settings-bar__close" aria-label="Schließen">✕</button>
+        <strong>🔧 Intro settings</strong>
+        <button type="button" class="intro-settings-bar__close" aria-label="Close">✕</button>
       </div>
-      <p class="intro-settings-bar__hint">Nur in diesem Browser sichtbar/gespeichert — ändert nichts für andere Besucher:innen.</p>
+      <p class="intro-settings-bar__hint">Only visible/stored in this browser — doesn't change anything for other visitors.</p>
       <label class="intro-settings-bar__toggle">
         <input type="checkbox" id="introToggleInput" />
-        <span>Intro-Modus (Hintergrund-Motiv + Soundtrack beim Öffnen)</span>
+        <span>Intro mode (background motif + soundtrack on load)</span>
       </label>
       <div class="intro-settings-bar__status" id="introStatus"></div>
-      <button type="button" class="intro-settings-bar__reset" id="introReset">Auf Website-Standard zurücksetzen</button>
+      <button type="button" class="intro-settings-bar__reset" id="introReset">Reset to site default</button>
     `;
     document.body.appendChild(el);
 
@@ -155,9 +155,9 @@
     function refreshStatus() {
       const override = localStorage.getItem(OVERRIDE_KEY);
       checkbox.checked = effectiveIntroEnabled();
-      if (override === "on") status.textContent = "Status: manuell AN (nur hier).";
-      else if (override === "off") status.textContent = "Status: manuell AUS (nur hier).";
-      else status.textContent = `Status: Website-Standard (aktuell ${INTRO_ENABLED_DEFAULT ? "AN" : "AUS"}).`;
+      if (override === "on") status.textContent = "Status: manually ON (here only).";
+      else if (override === "off") status.textContent = "Status: manually OFF (here only).";
+      else status.textContent = `Status: site default (currently ${INTRO_ENABLED_DEFAULT ? "ON" : "OFF"}).`;
     }
 
     checkbox.addEventListener("change", () => {

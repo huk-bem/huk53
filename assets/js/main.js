@@ -215,7 +215,7 @@
 
   function renderComments(container, comments) {
     if (!comments.length) {
-      container.innerHTML = `<p class="comment comment--empty">Noch keine Kommentare — sei die/der Erste.</p>`;
+      container.innerHTML = `<p class="comment comment--empty">No comments yet — be the first.</p>`;
       return;
     }
     container.innerHTML = comments
@@ -262,7 +262,7 @@
         </div>
 
         <div class="song-card__controls">
-          <button class="play-btn" type="button" aria-label="${song.title} anspielen (30 Sekunden Vorschau)">
+          <button class="play-btn" type="button" aria-label="Play ${song.title} (30-second preview)">
             <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
           </button>
@@ -279,13 +279,13 @@
 
         <div class="waveform" aria-hidden="true">${buildWaveform()}</div>
 
-        <p class="song-card__note" data-role="mode-note">30-Sekunden-Vorschau — lädt …</p>
+        <p class="song-card__note" data-role="mode-note">30-second preview — loading…</p>
 
         <div class="song-card__links" data-role="stream-links">
-          <span class="song-card__links-label">Vorschau beendet — weiterhören auf</span>
+          <span class="song-card__links-label">Preview finished — keep listening on</span>
           <div class="song-card__link-row">
-            <a class="stream-btn stream-btn--apple" href="${APPLE_MUSIC_URL}" target="_blank" rel="noopener">Direkt im Apple Music Store öffnen</a>
-            <a class="stream-btn stream-btn--spotify" href="${SPOTIFY_URL}" target="_blank" rel="noopener">Direkt in Spotify öffnen</a>
+            <a class="stream-btn stream-btn--apple" href="${APPLE_MUSIC_URL}" target="_blank" rel="noopener">Open directly in the Apple Music Store</a>
+            <a class="stream-btn stream-btn--spotify" href="${SPOTIFY_URL}" target="_blank" rel="noopener">Open directly in Spotify</a>
           </div>
         </div>
       </div>
@@ -299,17 +299,17 @@
           <span class="feedback__count-label" data-role="comment-count-label"></span>
         </div>
 
-        <div class="comments" data-role="comments"><p class="comment comment--empty">Lädt …</p></div>
+        <div class="comments" data-role="comments"><p class="comment comment--empty">Loading…</p></div>
 
         <form class="comment-form" data-role="comment-form">
           <div class="comment-form__row">
-            <input type="text" name="name" placeholder="Dein Name" maxlength="30" required />
+            <input type="text" name="name" placeholder="Your name" maxlength="30" required />
           </div>
-          <textarea name="text" placeholder="Was denkst du über den Track?" maxlength="240" required></textarea>
-          <button type="submit">Kommentar senden</button>
+          <textarea name="text" placeholder="What do you think of the track?" maxlength="240" required></textarea>
+          <button type="submit">Send comment</button>
         </form>
 
-        <p class="feedback__disclaimer" data-role="feedback-note">💬 Likes &amp; Kommentare sind für alle Besucher:innen sichtbar und werden sicher gespeichert. Dafür ist einmalig die Zustimmung zum Cookie nötig (Banner am unteren Bildschirmrand).</p>
+        <p class="feedback__disclaimer" data-role="feedback-note">💬 Likes &amp; comments are visible to all visitors and stored securely. This requires accepting the cookie once (banner at the bottom of the screen).</p>
       </div>
     </article>`;
   }
@@ -344,14 +344,14 @@
     });
     audio.addEventListener("loadedmetadata", () => {
       mode = "file";
-      modeNote.textContent = "🎵 Live-Track — 30 Sekunden Vorschau";
+      modeNote.textContent = "🎵 Live track — 30-second preview";
     });
     audio.src = song.audioSrc;
     audio.load();
 
     function switchToDemoMode() {
       mode = "demo";
-      modeNote.textContent = "🔊 Vorschau-Loop (Demo — echte MP3 in assets/audio/ ablegen) — 30 Sekunden";
+      modeNote.textContent = "🔊 Preview loop (demo — add a real MP3 to assets/audio/) — 30 seconds";
     }
     // If no metadata arrives quickly (no file present), assume demo mode.
     setTimeout(() => { if (mode === "pending") switchToDemoMode(); }, 900);
@@ -373,8 +373,8 @@
       progressFill.style.width = "100%";
       timeCurrent.textContent = formatTime(PREVIEW_SECONDS);
       playBtn.disabled = true;
-      playBtn.setAttribute("aria-label", `${song.title}: Vorschau beendet`);
-      modeNote.textContent = "✅ Vorschau abgeschlossen.";
+      playBtn.setAttribute("aria-label", `${song.title}: preview finished`);
+      modeNote.textContent = "✅ Preview finished.";
       streamLinks.classList.add("is-visible");
     }
 
@@ -447,8 +447,8 @@
       likeCountEl.textContent = likeState.count === null ? "–" : likeState.count;
       likeBtn.disabled = !hasConsent || !configured;
       likeBtn.title = !configured
-        ? "Feedback-Backend noch nicht verbunden"
-        : hasConsent ? "" : "Bitte zuerst das Cookie akzeptieren (Banner unten)";
+        ? "Feedback backend not connected yet"
+        : hasConsent ? "" : "Please accept the cookie first (banner below)";
     }
 
     async function loadLikes() {
@@ -471,7 +471,7 @@
       try {
         await toggleLike(song, prev.liked);
       } catch (err) {
-        console.warn("Like konnte nicht gespeichert werden:", err);
+        console.warn("Could not save like:", err);
         likeState = prev; // revert optimistic update
         renderLikeButton();
       }
@@ -482,7 +482,7 @@
       renderComments(commentsEl, comments);
       commentCountLabel.textContent = unavailable
         ? ""
-        : `${comments.length} Kommentar${comments.length === 1 ? "" : "e"}`;
+        : `${comments.length} comment${comments.length === 1 ? "" : "s"}`;
     }
 
     function updateFormAvailability() {
@@ -493,8 +493,8 @@
       const submitBtn = commentForm.querySelector('button[type="submit"]');
       if (submitBtn) {
         submitBtn.textContent = !configured
-          ? "Backend noch nicht verbunden"
-          : hasConsent ? "Kommentar senden" : "Bitte Cookie akzeptieren";
+          ? "Backend not connected yet"
+          : hasConsent ? "Send comment" : "Please accept the cookie";
       }
     }
 
@@ -521,7 +521,7 @@
         commentForm.reset();
         await refreshComments();
       } catch (err) {
-        console.warn("Kommentar konnte nicht gespeichert werden:", err);
+        console.warn("Could not save comment:", err);
       } finally {
         submitBtn.disabled = false;
       }

@@ -4,7 +4,7 @@
 
    One cookie (`huk53_visitor_id`, a random UUID) is used to attribute
    likes/comments to an anonymous visitor and to log the consent decision
-   itself. It is set ONLY after explicit "Akzeptieren". "Ablehnen" just
+   itself. It is set ONLY after explicit "Accept". "Decline" just
    dismisses the banner for this visit — the rest of the site works
    completely normally either way, only the like/comment feature (which
    functionally needs the id) stays off. See datenschutz.html.
@@ -60,7 +60,7 @@
         page: location.pathname,
       });
     } catch (err) {
-      console.warn("Konnte Consent-Entscheidung nicht protokollieren:", err);
+      console.warn("Could not log consent decision:", err);
     }
   }
 
@@ -72,18 +72,17 @@
     el.className = "cookie-banner";
     el.innerHTML = `
       <div class="cookie-banner__text">
-        <strong>Ein Cookie für Likes &amp; Kommentare</strong>
+        <strong>A cookie for likes &amp; comments</strong>
         <p>
-          Wir setzen ein einzelnes technisches Cookie, um deine Likes und Kommentare
-          einem anonymen Besuchsprofil zuzuordnen und Missbrauch zu verhindern.
-          Ohne Zustimmung funktioniert die restliche Seite ganz normal — nur Liken
-          und Kommentieren ist dann nicht möglich. Details in der
-          <a href="datenschutz.html">Datenschutzerklärung</a>.
+          We set a single technical cookie to attribute your likes and comments to an
+          anonymous visitor profile and to prevent abuse. Without consent, the rest of the
+          site works completely normally — only liking and commenting won't be available.
+          Details in the <a href="datenschutz.html">Privacy Policy</a>.
         </p>
       </div>
       <div class="cookie-banner__actions">
-        <button type="button" class="btn btn--ghost" data-role="reject">Ablehnen</button>
-        <button type="button" class="btn btn--primary" data-role="accept">Akzeptieren</button>
+        <button type="button" class="btn btn--ghost" data-role="reject">Decline</button>
+        <button type="button" class="btn btn--primary" data-role="accept">Accept</button>
       </div>
     `;
     document.body.appendChild(el);

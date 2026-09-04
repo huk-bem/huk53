@@ -26,8 +26,8 @@
       tag: "Piano Trio",
       bpm: 92,
       audioSrc: "assets/audio/jazz-blue-hour.mp3",
-      appleUrl: "https://music.apple.com/", // TODO: echten Apple-Music-Link eintragen
-      spotifyUrl: "https://open.spotify.com/", // TODO: echten Spotify-Link eintragen
+      appleUrl: "https://music.apple.com/", // TODO: add the real Apple Music link
+      spotifyUrl: "https://open.spotify.com/", // TODO: add the real Spotify link
     },
     {
       id: "midnight-sax",
@@ -100,7 +100,7 @@
       </div>
 
       <div class="jazz-card__controls">
-        <button class="play-btn" type="button" aria-label="${track.title} anspielen (30 Sekunden Vorschau)">
+        <button class="play-btn" type="button" aria-label="Play ${track.title} (30-second preview)">
           <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
         </button>
@@ -115,13 +115,13 @@
 
       <div class="waveform" aria-hidden="true">${buildWaveform()}</div>
 
-      <p class="jazz-card__note" data-role="mode-note">30-Sekunden-Vorschau — lädt …</p>
+      <p class="jazz-card__note" data-role="mode-note">30-second preview — loading…</p>
 
       <div class="jazz-card__links" data-role="links">
-        <span class="jazz-card__links-label">Vorschau beendet — weiterhören auf</span>
+        <span class="jazz-card__links-label">Preview finished — keep listening on</span>
         <div class="jazz-card__link-row">
-          <a class="stream-btn stream-btn--apple" href="${track.appleUrl}" target="_blank" rel="noopener">🍎 Apple Music</a>
-          <a class="stream-btn stream-btn--spotify" href="${track.spotifyUrl}" target="_blank" rel="noopener">🎧 Spotify</a>
+          <a class="stream-btn stream-btn--apple" href="${track.appleUrl}" target="_blank" rel="noopener">Open directly in the Apple Music Store</a>
+          <a class="stream-btn stream-btn--spotify" href="${track.spotifyUrl}" target="_blank" rel="noopener">Open directly in Spotify</a>
         </div>
       </div>
     </article>`;
@@ -225,14 +225,14 @@
     audio.addEventListener("error", () => { if (mode !== "file") switchToDemoMode(); });
     audio.addEventListener("loadedmetadata", () => {
       mode = "file";
-      modeNote.textContent = "🎵 Live-Track — 30 Sekunden Vorschau";
+      modeNote.textContent = "🎵 Live track — 30-second preview";
     });
     audio.src = track.audioSrc;
     audio.load();
 
     function switchToDemoMode() {
       mode = "demo";
-      modeNote.textContent = "🔊 Vorschau-Loop (Demo — echte MP3 in assets/audio/ ablegen) — 30 Sekunden";
+      modeNote.textContent = "🔊 Preview loop (demo — add a real MP3 to assets/audio/) — 30 seconds";
     }
     setTimeout(() => { if (mode === "pending") switchToDemoMode(); }, 900);
 
@@ -243,8 +243,8 @@
       progressFill.style.width = "100%";
       timeCurrent.textContent = formatTime(PREVIEW_SECONDS);
       playBtn.disabled = true;
-      playBtn.setAttribute("aria-label", `${track.title}: Vorschau beendet`);
-      modeNote.textContent = "✅ Vorschau abgeschlossen.";
+      playBtn.setAttribute("aria-label", `${track.title}: preview finished`);
+      modeNote.textContent = "✅ Preview finished.";
       links.classList.add("is-visible");
     }
 
