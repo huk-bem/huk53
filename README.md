@@ -245,3 +245,28 @@ npx serve .
 Push auf `main` deployt automatisch via `.github/workflows/deploy-pages.yml`
 auf GitHub Pages. Damit das funktioniert, muss in den Repo-Settings unter
 **Pages** die Quelle einmalig auf „GitHub Actions“ gestellt werden.
+
+## Eigene Domain (huk53.de)
+
+Die Datei `CNAME` im Repo-Root enthält `huk53.de` — das ist die eine
+Hälfte der Einrichtung (steuert GitHub Pages), die andere Hälfte sind
+DNS-Einträge bei deinem Domain-Anbieter, die ich von hier aus nicht selbst
+setzen kann. Einmalig einzurichten:
+
+1. **DNS-Einträge beim Domain-Anbieter** (Strato, IONOS, Namecheap, …):
+   - Vier **A-Records** auf `huk53.de` (Root/„@“), alle auf GitHub Pages:
+     `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+   - Optional zusätzlich vier **AAAA-Records** (IPv6):
+     `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153`
+   - Ein **CNAME-Record** auf `www.huk53.de` → `huk-bem.github.io`
+2. **GitHub → Repo-Settings → Pages → Custom domain:** `huk53.de`
+   eintragen und speichern (bestätigt/übernimmt die `CNAME`-Datei aus dem
+   Repo). Sobald DNS propagiert ist (kann bis zu 24h dauern, meist
+   schneller), stellt GitHub automatisch ein Zertifikat aus — danach
+   **„Enforce HTTPS"** aktivieren.
+3. Ergebnis: `www.huk53.de` leitet automatisch auf `huk53.de` weiter (weil
+   die `CNAME`-Datei nur `huk53.de` enthält), und in der Adressleiste
+   erscheint immer `huk53.de` — nie die `github.io`-URL.
+
+Sag Bescheid, bei welchem Anbieter die Domain registriert ist, dann gebe
+ich dir die exakten Klick-Schritte für dessen DNS-Verwaltung.
