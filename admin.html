@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Text-Editor — HUK</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="assets/css/hub.css" />
+<style>
+  .admin-wrap { max-width: 760px; margin: 0 auto; padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 2rem) 5rem; }
+  .admin-wrap h1 { font-family: "Space Grotesk", sans-serif; font-size: 1.6rem; margin: 0 0 0.4rem; }
+  .admin-wrap > p.lede { color: var(--hub-fg-dim); font-size: 0.9rem; margin: 0 0 2rem; }
+
+  .admin-card {
+    border: 1px solid var(--hub-border);
+    border-radius: 8px;
+    padding: 1.4rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .admin-card label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--hub-fg-dim);
+    margin-bottom: 0.5rem;
+  }
+
+  .admin-field input[type="email"],
+  .admin-field textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--hub-border);
+    border-radius: 6px;
+    color: var(--hub-fg);
+    font: inherit;
+    font-size: 0.92rem;
+    padding: 0.65rem 0.8rem;
+    resize: vertical;
+    min-height: 2.6rem;
+  }
+  .admin-field input[type="email"]:focus,
+  .admin-field textarea:focus { outline: none; border-color: var(--hub-fg-dim); }
+
+  .admin-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--hub-fg);
+    color: #060606;
+    border: none;
+    border-radius: 999px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  .admin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .admin-btn--ghost {
+    background: transparent;
+    color: var(--hub-fg-dim);
+    border: 1px solid var(--hub-border);
+  }
+
+  .admin-group { margin: 2.2rem 0 1rem; }
+  .admin-group h2 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--hub-accent);
+    margin: 0 0 0.9rem;
+    border-bottom: 1px solid var(--hub-border);
+    padding-bottom: 0.5rem;
+  }
+
+  .admin-field { margin-bottom: 1.1rem; }
+  .admin-field textarea { min-height: 4.2rem; }
+  .admin-field.is-dirty textarea,
+  .admin-field.is-dirty input { border-color: var(--hub-accent); }
+
+  .admin-status {
+    font-size: 0.85rem;
+    margin: 1rem 0;
+    padding: 0.7rem 0.9rem;
+    border-radius: 6px;
+    border: 1px solid var(--hub-border);
+  }
+  .admin-status--ok { border-color: #2fae66; color: #6fe3a4; }
+  .admin-status--err { border-color: #d1495b; color: #ff9aa6; }
+
+  .admin-actions { display: flex; gap: 0.7rem; align-items: center; flex-wrap: wrap; margin-top: 1.5rem; }
+  .admin-savebar {
+    position: sticky;
+    bottom: 0;
+    background: var(--hub-bg);
+    border-top: 1px solid var(--hub-border);
+    padding: 1rem 0;
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+  }
+  .admin-whoami { font-size: 0.8rem; color: var(--hub-fg-dim); }
+</style>
+</head>
+<body>
+
+<header class="hub-nav">
+  <div class="hub-container">
+    <a href="index.html" class="hub-logo" style="text-decoration:none;">HUK</a>
+  </div>
+</header>
+
+<main class="admin-wrap">
+  <h1>Text-Editor</h1>
+  <p class="lede">
+    Hier änderst du die Marketing-Texte auf Startseite, EDM- und Jazz-Fusion-Seite direkt —
+    „Speichern" wirkt sofort auf der echten Webseite, kein Warten, kein Redeploy nötig. Impressum
+    und Datenschutz sind hier bewusst nicht editierbar (rechtlich heikel), dafür wie bisher direkt
+    im Code.
+  </p>
+
+  <div id="loginCard" class="admin-card" hidden>
+    <p style="margin-top:0;color:var(--hub-fg-dim);font-size:0.9rem;">
+      Melde dich mit deiner E-Mail-Adresse an — du bekommst einen Login-Link zugeschickt, ein Klick
+      darauf öffnet diese Seite eingeloggt. Kein Passwort nötig.
+    </p>
+    <div class="admin-field">
+      <label for="loginEmail">E-Mail-Adresse</label>
+      <input type="email" id="loginEmail" placeholder="huk53@kloeppis.de" autocomplete="email" />
+    </div>
+    <button type="button" class="admin-btn" id="loginBtn">Login-Link senden</button>
+    <div id="loginStatus"></div>
+  </div>
+
+  <div id="editorCard" hidden>
+    <div class="admin-whoami" id="whoami"></div>
+    <div id="groups"></div>
+
+    <div class="admin-savebar">
+      <button type="button" class="admin-btn" id="saveBtn">Änderungen speichern</button>
+      <button type="button" class="admin-btn admin-btn--ghost" id="reloadBtn">Neu laden</button>
+      <button type="button" class="admin-btn admin-btn--ghost" id="signOutBtn">Abmelden</button>
+      <span id="saveStatus"></span>
+    </div>
+  </div>
+
+  <div id="notAuthorized" class="admin-card" hidden>
+    <p style="margin:0;">
+      Eingeloggt als <strong id="wrongEmail"></strong> — dieses Konto darf hier nichts ändern.
+      Melde dich mit der Studio-E-Mail-Adresse an.
+    </p>
+    <button type="button" class="admin-btn admin-btn--ghost" id="signOutBtn2" style="margin-top:1rem;">Abmelden</button>
+  </div>
+</main>
+
+<script>
+  window.HUK53_SUPABASE_URL = "https://vmjivwfieyfnlcejkktu.supabase.co";
+  window.HUK53_SUPABASE_ANON_KEY = "sb_publishable_i35To_pJC-7evKXrk4Oqhw_m14vwlOf";
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(() => {
+  "use strict";
+
+  const OWNER_EMAIL = "huk53@kloeppis.de";
+
+  // Human-friendly labels + grouping, purely for display — the DB key is
+  // what actually matters and is what content.js reads on the live pages.
+  const FIELD_GROUPS = [
+    {
+      title: "Startseite (index.html)",
+      fields: [
+        ["hub.kicker", "Kicker (klein, über der Headline)"],
+        ["hub.title", "Headline"],
+        ["hub.lede", "Einleitungstext"],
+        ["hub.edm.teaser", "EDM-Kachel: Teasertext"],
+        ["hub.edm.cta", "EDM-Kachel: Button-Text"],
+        ["hub.jazz.teaser", "Jazz-Fusion-Kachel: Teasertext"],
+        ["hub.jazz.cta", "Jazz-Fusion-Kachel: Button-Text"],
+      ],
+    },
+    {
+      title: "EDM-Seite (edm.html)",
+      fields: [
+        ["edm.hero.tagline", "Hero: Untertitel"],
+        ["edm.hero.cta", "Hero: Button-Text"],
+        ["edm.songs.heading", "Songs-Bereich: Überschrift"],
+        ["edm.songs.intro", "Songs-Bereich: Einleitungstext"],
+        ["edm.about.heading", "Studio-Bereich: Überschrift"],
+        ["edm.about.p1", "Studio-Bereich: Textabsatz 1"],
+        ["edm.about.p2", "Studio-Bereich: Textabsatz 2"],
+      ],
+    },
+    {
+      title: "Jazz-Fusion-Seite (jazz.html)",
+      fields: [["jazz.hero.tagline", "Hero: Untertitel"]],
+    },
+  ];
+
+  const supa = window.supabase.createClient(window.HUK53_SUPABASE_URL, window.HUK53_SUPABASE_ANON_KEY);
+
+  const loginCard = document.getElementById("loginCard");
+  const editorCard = document.getElementById("editorCard");
+  const notAuthorized = document.getElementById("notAuthorized");
+  const groupsEl = document.getElementById("groups");
+  const whoamiEl = document.getElementById("whoami");
+  const loginStatus = document.getElementById("loginStatus");
+  const saveStatus = document.getElementById("saveStatus");
+
+  let originalValues = {}; // key -> value as loaded from DB, to detect changes
+
+  function showStatus(el, text, ok) {
+    el.innerHTML = `<div class="admin-status ${ok ? "admin-status--ok" : "admin-status--err"}">${text}</div>`;
+  }
+
+  document.getElementById("loginBtn").addEventListener("click", async () => {
+    const email = document.getElementById("loginEmail").value.trim();
+    if (!email) return;
+    loginStatus.innerHTML = "";
+    try {
+      const { error } = await supa.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: window.location.origin + window.location.pathname },
+      });
+      if (error) throw error;
+      showStatus(loginStatus, "Login-Link verschickt — schau in dein Postfach und klick den Link darin.", true);
+    } catch (err) {
+      showStatus(loginStatus, "Fehler beim Senden: " + err.message, false);
+    }
+  });
+
+  async function signOut() {
+    await supa.auth.signOut();
+    window.location.reload();
+  }
+  document.getElementById("signOutBtn").addEventListener("click", signOut);
+  document.getElementById("signOutBtn2").addEventListener("click", signOut);
+
+  function renderEditor(rows) {
+    originalValues = {};
+    rows.forEach((r) => { originalValues[r.key] = r.value; });
+
+    groupsEl.innerHTML = FIELD_GROUPS.map((group) => `
+      <div class="admin-group">
+        <h2>${group.title}</h2>
+        ${group.fields.map(([key, label]) => `
+          <div class="admin-field" data-key="${key}">
+            <label for="field-${key}">${label}</label>
+            <textarea id="field-${key}" data-key="${key}">${escapeHtml(originalValues[key] ?? "")}</textarea>
+          </div>
+        `).join("")}
+      </div>
+    `).join("");
+
+    groupsEl.querySelectorAll("textarea").forEach((ta) => {
+      ta.addEventListener("input", () => {
+        const wrap = ta.closest(".admin-field");
+        wrap.classList.toggle("is-dirty", ta.value !== (originalValues[ta.dataset.key] ?? ""));
+      });
+    });
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  async function loadContent() {
+    const { data, error } = await supa.from("site_content").select("key, value");
+    if (error) {
+      showStatus(saveStatus, "Konnte Inhalte nicht laden: " + error.message, false);
+      return;
+    }
+    renderEditor(data || []);
+  }
+
+  document.getElementById("reloadBtn").addEventListener("click", loadContent);
+
+  document.getElementById("saveBtn").addEventListener("click", async () => {
+    const dirtyFields = Array.from(groupsEl.querySelectorAll(".admin-field.is-dirty"));
+    if (!dirtyFields.length) {
+      showStatus(saveStatus, "Keine Änderungen zum Speichern.", true);
+      return;
+    }
+    const saveBtn = document.getElementById("saveBtn");
+    saveBtn.disabled = true;
+    saveStatus.innerHTML = "";
+    try {
+      for (const field of dirtyFields) {
+        const key = field.dataset.key;
+        const value = field.querySelector("textarea").value;
+        const { error } = await supa.from("site_content").upsert({ key, value, updated_at: new Date().toISOString() });
+        if (error) throw new Error(`"${key}": ${error.message}`);
+        originalValues[key] = value;
+        field.classList.remove("is-dirty");
+      }
+      showStatus(saveStatus, `${dirtyFields.length} Änderung(en) gespeichert — live auf der Webseite.`, true);
+    } catch (err) {
+      showStatus(saveStatus, "Fehler beim Speichern: " + err.message, false);
+    } finally {
+      saveBtn.disabled = false;
+    }
+  });
+
+  async function init() {
+    const { data: { session } } = await supa.auth.getSession();
+    if (!session) {
+      loginCard.hidden = false;
+      return;
+    }
+    const email = session.user?.email || "";
+    if (email.toLowerCase() !== OWNER_EMAIL.toLowerCase()) {
+      document.getElementById("wrongEmail").textContent = email || "(unbekannt)";
+      notAuthorized.hidden = false;
+      return;
+    }
+    whoamiEl.textContent = `Angemeldet als ${email}`;
+    editorCard.hidden = false;
+    await loadContent();
+  }
+
+  supa.auth.onAuthStateChange(() => init());
+  init();
+})();
+</script>
+</body>
+</html>

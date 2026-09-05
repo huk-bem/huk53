@@ -43,10 +43,10 @@
 
   <span class="hero__eyebrow">🎛️ Dance · EDM · Fusion</span>
   <h1><span class="hero__title-line">HUK FUSION</span><span class="hero__title-line">EDM</span></h1>
-  <p class="hero__tagline">Dance and EDM productions from the HUK53 studio — with crossover and fusion elements.</p>
+  <p class="hero__tagline" data-content-key="edm.hero.tagline">Dance and EDM productions from the HUK53 studio — with crossover and fusion elements.</p>
 
   <div class="hero__actions">
-    <a href="#songs" class="btn btn--primary">🎧 Listen to tracks</a>
+    <a href="#songs" class="btn btn--primary" data-content-key="edm.hero.cta">🎧 Listen to tracks</a>
   </div>
 
   <div class="hero__eq" aria-hidden="true">
@@ -71,8 +71,8 @@
   <div class="container">
     <div class="section__head">
       <span class="section__kicker">Fresh Cuts</span>
-      <h2>Fresh tracks from the studio.</h2>
-      <p>Dance, EDM, and everything in between — the latest cuts from the HUK53 studio. Tune in, drop a like, and let us know what you hear.</p>
+      <h2 data-content-key="edm.songs.heading">Fresh tracks from the studio.</h2>
+      <p data-content-key="edm.songs.intro">Dance, EDM, and everything in between — the latest cuts from the HUK53 studio. Tune in, drop a like, and let us know what you hear.</p>
     </div>
 
     <div class="songs__grid" id="songsGrid">
@@ -86,9 +86,9 @@
   <div class="container about__grid">
     <div class="about__text">
       <span class="section__kicker">The Studio</span>
-      <h2 style="margin-bottom:1.1rem;">HUK FUSION EDM combines clean dance energy with crossover elements.</h2>
-      <p>HUK FUSION EDM stands for dance and EDM productions from the HUK53 studio: danceable core structures, enriched with elements from crossover and fusion.</p>
-      <p>From the first idea to the finished mix, the music takes shape right here in the studio — with an eye for detail and an ear for unusual sound combinations.</p>
+      <h2 style="margin-bottom:1.1rem;" data-content-key="edm.about.heading">HUK FUSION EDM combines clean dance energy with crossover elements.</h2>
+      <p data-content-key="edm.about.p1">HUK FUSION EDM stands for dance and EDM productions from the HUK53 studio: danceable core structures, enriched with elements from crossover and fusion.</p>
+      <p data-content-key="edm.about.p2">From the first idea to the finished mix, the music takes shape right here in the studio — with an eye for detail and an ear for unusual sound combinations.</p>
     </div>
     <div class="about__stats">
       <div class="stat"><strong data-count="128">0</strong><span>Peak BPM</span></div>
@@ -130,6 +130,7 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="assets/js/consent.js"></script>
+<script src="assets/js/content.js"></script>
 <script src="assets/js/main.js"></script>
 <!-- Intro Mode: hidden owner toggle for background motif + autoplay soundtrack. See assets/js/intro.js. -->
 <script>window.HUK53_INTRO_TRACK = "assets/audio/back-on-track.mp3";</script>

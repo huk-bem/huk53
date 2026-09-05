@@ -29,20 +29,23 @@ zurückführen.
 index.html              Startseite — kühle Verteilerseite (Hub) für EDM/Jazz Fusion
 edm.html                 EDM-Unterseite — Player, Songs, Likes/Kommentare, Studio-Info
 jazz.html                Jazz-Fusion-Unterseite — Player, vier "Moments and Moods"-Tracks
+admin.html              Text-Editor für Marketing-Texte (Magic-Link-Login, siehe unten)
 impressum.html          Legal Notice (Impressum)
 datenschutz.html        Privacy Policy (Datenschutzerklärung)
-assets/css/hub.css      Design der Startseite + Impressum/Datenschutz (schwarz-weiß, dezent)
+assets/css/hub.css      Design der Startseite + Impressum/Datenschutz + admin.html (schwarz-weiß, dezent)
 assets/css/style.css    Design der EDM-Seite (Dark/Neon, wie bisher) — auch von jazz.html genutzt
 assets/css/intro.css    Zusatzstyles für Intro-Modus (nur auf edm.html)
 assets/css/consent.css  Zusatzstyles für den Cookie-Consent-Banner (nur auf edm.html)
 assets/css/jazz.css     Zusatzstyles für die Jazz-Fusion-Seite (Gold-Akzent, Hero mit Cover)
 assets/js/main.js       Gemeinsame Basis (Nav, Hero-Canvas) + EDM: Player, Likes/Kommentare (Supabase)
 assets/js/consent.js    Cookie-Banner + Supabase-Client + Besuchskennung (nur auf edm.html)
+assets/js/content.js    Lädt Marketing-Text-Overrides aus Supabase (index/edm/jazz.html)
 assets/js/intro.js      Intro-Modus: Hintergrund-Motiv + Autoplay-Soundtrack (nur auf edm.html)
 assets/js/jazz.js       Jazz-Fusion-Player (4 Tracks, 30s-Vorschau + Streaming-Buttons)
 assets/img/edm-teaser.gif   Cover-Motiv für die EDM-Kachel auf der Startseite
 assets/img/jazz-teaser.jpg  Cover-Motiv ("Moments and Moods") für Jazz-Fusion-Kachel + Hero
 assets/audio/           MP3-Dateien (siehe README dort für Status pro Track)
+supabase-content-setup.sql  SQL für die site_content-Tabelle + RLS (Text-Editor)
 ```
 
 ## Startseite (Hub)
@@ -188,6 +191,41 @@ Like unterscheiden — jede:r könnte grundsätzlich jede Like-Zeile togglen.
 Der praktische Schaden ist gering (kein Zugriff auf andere Daten), aber
 das ist der Kompromiss der kontofreien Lösung, transparent statt
 verschwiegen.
+
+## Text-Editor (`admin.html`) — Marketing-Texte selbst ändern
+
+Die wichtigsten Marketing-Texte auf Startseite, EDM- und Jazz-Fusion-Seite
+(Kicker, Headlines, Teasertexte, Button-Beschriftungen) lassen sich unter
+`admin.html` direkt bearbeiten — **kein Redeploy, keine Wartezeit**:
+Speichern schreibt sofort in die Supabase-Tabelle `site_content`, die die
+Live-Seiten beim Laden abfragen (`assets/js/content.js`) und damit den
+fest im HTML stehenden Text überschreiben (der HTML-Text bleibt als
+Fallback, falls Supabase mal nicht erreichbar ist).
+
+**Login:** kein Passwort — `admin.html` schickt per Supabase Auth einen
+Magic-Link an die eingegebene E-Mail-Adresse. Schreiben darf ausschließlich
+`huk53@kloeppis.de` (in `supabase-content-setup.sql` als RLS-Regel
+hinterlegt); jede andere E-Mail-Adresse kann sich zwar per Magic-Link
+einloggen, sieht dann aber nur „nicht berechtigt" statt des Editors — die
+eigentliche Absicherung läuft also über die Datenbank-Regel, nicht nur
+über die Oberfläche.
+
+**Einmalige Einrichtung in Supabase (falls Magic-Links nicht ankommen):**
+Im Supabase-Dashboard unter **Authentication → URL Configuration** muss
+die Redirect-URL `https://huk-bem.github.io/huk53/admin.html` eingetragen
+sein (Supabase lehnt Redirects zu nicht gelisteten URLs sonst ab). Das ist
+eine reine Dashboard-Einstellung, die ich von hier aus nicht setzen kann.
+
+**Bewusst NICHT editierbar hierüber:** Impressum, Datenschutzerklärung,
+Song-Metadaten (Titel/BPM/Links) sowie alle Formular-/Button-Mikrotexte
+der Kommentarfunktion — das bleibt wie bisher direkte Code-Änderung über
+den Chat, weil es entweder rechtlich heikel ist (Impressum/Datenschutz)
+oder strukturell zusammenhängt (Song-Konfiguration in `main.js`/`jazz.js`).
+
+Welche Felder editierbar sind, steht im `FIELD_GROUPS`-Array oben in
+`admin.html` — neue Felder ergänzen: HTML-Element ein
+`data-content-key="…"`-Attribut geben, passenden Eintrag in
+`FIELD_GROUPS` ergänzen, fertig.
 
 ## Lokal ansehen
 

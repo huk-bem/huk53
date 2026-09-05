@@ -29,9 +29,9 @@
 
 <main>
   <section class="hub-intro hub-container">
-    <p class="hub-kicker">Music Studio</p>
-    <h1>Two Sound Worlds. One Studio.</h1>
-    <p class="hub-lede">Electronic music between the dance floor and improvisation — produced with a clear head. Two areas, one origin.</p>
+    <p class="hub-kicker" data-content-key="hub.kicker">Music Studio</p>
+    <h1 data-content-key="hub.title">Two Sound Worlds. One Studio.</h1>
+    <p class="hub-lede" data-content-key="hub.lede">Electronic music between the dance floor and improvisation — produced with a clear head. Two areas, one origin.</p>
   </section>
 
   <section class="hub-grid">
@@ -42,8 +42,8 @@
       <div class="hub-tile__body">
         <span class="hub-tile__kicker">01 — Area</span>
         <h2>EDM</h2>
-        <p>Clean beats, precise production — dance, EDM and crossover from the studio. Six tracks to explore, each linked directly to Spotify and Apple Music.</p>
-        <span class="hub-tile__cta">Listen to the tracks →</span>
+        <p data-content-key="hub.edm.teaser">Clean beats, precise production — dance, EDM and crossover from the studio. Six tracks to explore, each linked directly to Spotify and Apple Music.</p>
+        <span class="hub-tile__cta" data-content-key="hub.edm.cta">Listen to the tracks →</span>
       </div>
     </a>
 
@@ -54,8 +54,8 @@
       <div class="hub-tile__body">
         <span class="hub-tile__kicker">02 — Area</span>
         <h2>Jazz Fusion</h2>
-        <p>Jazz harmony meets electronic texture — four tracks from <em>Moments and Moods</em>. Press play, then follow through to Spotify and Apple Music.</p>
-        <span class="hub-tile__cta">Listen to the tracks →</span>
+        <p data-content-key="hub.jazz.teaser">Jazz harmony meets electronic texture — four tracks from the Moments and Moods release. Press play, then follow through to Spotify and Apple Music.</p>
+        <span class="hub-tile__cta" data-content-key="hub.jazz.cta">Listen to the tracks →</span>
       </div>
     </a>
   </section>
@@ -83,5 +83,13 @@
 </footer>
 
 <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+
+<!-- Editable site copy: public read-only, see assets/js/content.js + admin.html. -->
+<script>
+  window.HUK53_SUPABASE_URL = "https://vmjivwfieyfnlcejkktu.supabase.co";
+  window.HUK53_SUPABASE_ANON_KEY = "sb_publishable_i35To_pJC-7evKXrk4Oqhw_m14vwlOf";
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/content.js"></script>
 </body>
 </html>
