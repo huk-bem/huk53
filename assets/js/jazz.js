@@ -23,10 +23,16 @@
   const APPLE_MUSIC_URL = "https://music.apple.com/de/artist/huk-fusion/6803407059";
   const SPOTIFY_URL = "https://open.spotify.com/artist/5V0AuyekqjEpdtGwjL6m85";
 
+  /* Titles/order per the official "Moments and Moods" tracklist. Audio
+     filenames were already on disk before the official titles arrived,
+     so they don't match 1:1 — matched up by elimination against the two
+     already-correct titles (Sunday Feeling, End of Summer). Worth a
+     quick listen-through to confirm "echo.mp3" is really "Turning Point"
+     and "fading-light.mp3" is really "Changing Moods". */
   const JAZZ_TRACKS = [
     {
-      id: "echo",
-      title: "Echo",
+      id: "turning-point",
+      title: "Turning Point",
       tag: "Fusion Jazz",
       bpm: 92,
       audioSrc: "assets/audio/echo.mp3",
@@ -34,11 +40,11 @@
       spotifyUrl: SPOTIFY_URL,
     },
     {
-      id: "fading-light",
-      title: "Fading Light",
+      id: "end-of-summer",
+      title: "End of Summer",
       tag: "Fusion Jazz",
-      bpm: 88,
-      audioSrc: "assets/audio/fading-light.mp3",
+      bpm: 90,
+      audioSrc: "assets/audio/end-of-summer.mp3",
       appleUrl: APPLE_MUSIC_URL,
       spotifyUrl: SPOTIFY_URL,
     },
@@ -52,11 +58,11 @@
       spotifyUrl: SPOTIFY_URL,
     },
     {
-      id: "end-of-summer",
-      title: "End of Summer",
+      id: "changing-moods",
+      title: "Changing Moods",
       tag: "Fusion Jazz",
-      bpm: 90,
-      audioSrc: "assets/audio/end-of-summer.mp3",
+      bpm: 88,
+      audioSrc: "assets/audio/fading-light.mp3",
       appleUrl: APPLE_MUSIC_URL,
       spotifyUrl: SPOTIFY_URL,
     },

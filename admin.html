@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Text-Editor — HUK</title>
+<title>Text Editor — HUK</title>
 <meta name="robots" content="noindex" />
 <link rel="stylesheet" href="assets/css/hub.css" />
 <style>
@@ -113,24 +113,24 @@
 </header>
 
 <main class="admin-wrap">
-  <h1>Text-Editor</h1>
+  <h1>Text Editor</h1>
   <p class="lede">
-    Hier änderst du die Marketing-Texte auf Startseite, EDM- und Jazz-Fusion-Seite direkt —
-    „Speichern" wirkt sofort auf der echten Webseite, kein Warten, kein Redeploy nötig. Impressum
-    und Datenschutz sind hier bewusst nicht editierbar (rechtlich heikel), dafür wie bisher direkt
-    im Code.
+    Edit the marketing copy on the homepage, EDM page, and Jazz Fusion page directly here —
+    "Save" takes effect on the live website immediately, no waiting, no redeploy needed. Legal
+    Notice and Privacy Policy are deliberately not editable here (legally sensitive), those still
+    go through the code as before.
   </p>
 
   <div id="loginCard" class="admin-card" hidden>
     <p style="margin-top:0;color:var(--hub-fg-dim);font-size:0.9rem;">
-      Melde dich mit deiner E-Mail-Adresse an — du bekommst einen Login-Link zugeschickt, ein Klick
-      darauf öffnet diese Seite eingeloggt. Kein Passwort nötig.
+      Sign in with your email address — you'll get a login link by email, one click on it opens
+      this page signed in. No password needed.
     </p>
     <div class="admin-field">
-      <label for="loginEmail">E-Mail-Adresse</label>
+      <label for="loginEmail">Email address</label>
       <input type="email" id="loginEmail" placeholder="huk53@kloeppis.de" autocomplete="email" />
     </div>
-    <button type="button" class="admin-btn" id="loginBtn">Login-Link senden</button>
+    <button type="button" class="admin-btn" id="loginBtn">Send login link</button>
     <div id="loginStatus"></div>
   </div>
 
@@ -139,19 +139,19 @@
     <div id="groups"></div>
 
     <div class="admin-savebar">
-      <button type="button" class="admin-btn" id="saveBtn">Änderungen speichern</button>
-      <button type="button" class="admin-btn admin-btn--ghost" id="reloadBtn">Neu laden</button>
-      <button type="button" class="admin-btn admin-btn--ghost" id="signOutBtn">Abmelden</button>
+      <button type="button" class="admin-btn" id="saveBtn">Save changes</button>
+      <button type="button" class="admin-btn admin-btn--ghost" id="reloadBtn">Reload</button>
+      <button type="button" class="admin-btn admin-btn--ghost" id="signOutBtn">Sign out</button>
       <span id="saveStatus"></span>
     </div>
   </div>
 
   <div id="notAuthorized" class="admin-card" hidden>
     <p style="margin:0;">
-      Eingeloggt als <strong id="wrongEmail"></strong> — dieses Konto darf hier nichts ändern.
-      Melde dich mit der Studio-E-Mail-Adresse an.
+      Signed in as <strong id="wrongEmail"></strong> — this account isn't allowed to change
+      anything here. Sign in with the studio's email address instead.
     </p>
-    <button type="button" class="admin-btn admin-btn--ghost" id="signOutBtn2" style="margin-top:1rem;">Abmelden</button>
+    <button type="button" class="admin-btn admin-btn--ghost" id="signOutBtn2" style="margin-top:1rem;">Sign out</button>
   </div>
 </main>
 
@@ -170,32 +170,32 @@
   // what actually matters and is what content.js reads on the live pages.
   const FIELD_GROUPS = [
     {
-      title: "Startseite (index.html)",
+      title: "Homepage (index.html)",
       fields: [
-        ["hub.kicker", "Kicker (klein, über der Headline)"],
+        ["hub.kicker", "Kicker (small, above the headline)"],
         ["hub.title", "Headline"],
-        ["hub.lede", "Einleitungstext"],
-        ["hub.edm.teaser", "EDM-Kachel: Teasertext"],
-        ["hub.edm.cta", "EDM-Kachel: Button-Text"],
-        ["hub.jazz.teaser", "Jazz-Fusion-Kachel: Teasertext"],
-        ["hub.jazz.cta", "Jazz-Fusion-Kachel: Button-Text"],
+        ["hub.lede", "Intro text"],
+        ["hub.edm.teaser", "EDM tile: teaser text"],
+        ["hub.edm.cta", "EDM tile: button text"],
+        ["hub.jazz.teaser", "Jazz Fusion tile: teaser text"],
+        ["hub.jazz.cta", "Jazz Fusion tile: button text"],
       ],
     },
     {
-      title: "EDM-Seite (edm.html)",
+      title: "EDM page (edm.html)",
       fields: [
-        ["edm.hero.tagline", "Hero: Untertitel"],
-        ["edm.hero.cta", "Hero: Button-Text"],
-        ["edm.songs.heading", "Songs-Bereich: Überschrift"],
-        ["edm.songs.intro", "Songs-Bereich: Einleitungstext"],
-        ["edm.about.heading", "Studio-Bereich: Überschrift"],
-        ["edm.about.p1", "Studio-Bereich: Textabsatz 1"],
-        ["edm.about.p2", "Studio-Bereich: Textabsatz 2"],
+        ["edm.hero.tagline", "Hero: subtitle"],
+        ["edm.hero.cta", "Hero: button text"],
+        ["edm.songs.heading", "Songs section: heading"],
+        ["edm.songs.intro", "Songs section: intro text"],
+        ["edm.about.heading", "Studio section: heading"],
+        ["edm.about.p1", "Studio section: paragraph 1"],
+        ["edm.about.p2", "Studio section: paragraph 2"],
       ],
     },
     {
-      title: "Jazz-Fusion-Seite (jazz.html)",
-      fields: [["jazz.hero.tagline", "Hero: Untertitel"]],
+      title: "Jazz Fusion page (jazz.html)",
+      fields: [["jazz.hero.tagline", "Hero: subtitle"]],
     },
   ];
 
@@ -225,9 +225,9 @@
         options: { emailRedirectTo: window.location.origin + window.location.pathname },
       });
       if (error) throw error;
-      showStatus(loginStatus, "Login-Link verschickt — schau in dein Postfach und klick den Link darin.", true);
+      showStatus(loginStatus, "Login link sent — check your inbox and click the link in it.", true);
     } catch (err) {
-      showStatus(loginStatus, "Fehler beim Senden: " + err.message, false);
+      showStatus(loginStatus, "Error sending link: " + err.message, false);
     }
   });
 
@@ -271,7 +271,7 @@
   async function loadContent() {
     const { data, error } = await supa.from("site_content").select("key, value");
     if (error) {
-      showStatus(saveStatus, "Konnte Inhalte nicht laden: " + error.message, false);
+      showStatus(saveStatus, "Could not load content: " + error.message, false);
       return;
     }
     renderEditor(data || []);
@@ -282,7 +282,7 @@
   document.getElementById("saveBtn").addEventListener("click", async () => {
     const dirtyFields = Array.from(groupsEl.querySelectorAll(".admin-field.is-dirty"));
     if (!dirtyFields.length) {
-      showStatus(saveStatus, "Keine Änderungen zum Speichern.", true);
+      showStatus(saveStatus, "No changes to save.", true);
       return;
     }
     const saveBtn = document.getElementById("saveBtn");
@@ -297,9 +297,9 @@
         originalValues[key] = value;
         field.classList.remove("is-dirty");
       }
-      showStatus(saveStatus, `${dirtyFields.length} Änderung(en) gespeichert — live auf der Webseite.`, true);
+      showStatus(saveStatus, `${dirtyFields.length} change(s) saved — live on the website.`, true);
     } catch (err) {
-      showStatus(saveStatus, "Fehler beim Speichern: " + err.message, false);
+      showStatus(saveStatus, "Error saving: " + err.message, false);
     } finally {
       saveBtn.disabled = false;
     }
@@ -313,11 +313,11 @@
     }
     const email = session.user?.email || "";
     if (email.toLowerCase() !== OWNER_EMAIL.toLowerCase()) {
-      document.getElementById("wrongEmail").textContent = email || "(unbekannt)";
+      document.getElementById("wrongEmail").textContent = email || "(unknown)";
       notAuthorized.hidden = false;
       return;
     }
-    whoamiEl.textContent = `Angemeldet als ${email}`;
+    whoamiEl.textContent = `Signed in as ${email}`;
     editorCard.hidden = false;
     await loadContent();
   }

@@ -11,8 +11,8 @@ ein kleines, direkt angebundenes Supabase-Projekt.
 Veröffentlicht via GitHub Pages: https://huk-bem.github.io/huk53/
 
 **Sprache:** Alle Seiteninhalte (Texte, Buttons, Formulare, Impressum/
-Datenschutz) sind auf **Englisch**. Diese README bleibt zur Pflege auf
-Deutsch.
+Datenschutz, inkl. `admin.html`) sind auf **Englisch**. Diese README
+bleibt zur Pflege auf Deutsch.
 
 ## Vorherige Version (archiviert)
 
@@ -42,7 +42,7 @@ assets/js/consent.js    Cookie-Banner + Supabase-Client + Besuchskennung (nur au
 assets/js/content.js    Lädt Marketing-Text-Overrides aus Supabase (index/edm/jazz.html)
 assets/js/intro.js      Intro-Modus: Hintergrund-Motiv + Autoplay-Soundtrack (nur auf edm.html)
 assets/js/jazz.js       Jazz-Fusion-Player (4 Tracks, 30s-Vorschau + Streaming-Buttons)
-assets/img/edm-teaser.gif   Cover-Motiv für die EDM-Kachel auf der Startseite
+assets/img/edm-teaser.jpg   Cover-Motiv ("FUSION EDM") für die EDM-Kachel auf der Startseite
 assets/img/jazz-teaser.jpg  Cover-Motiv ("Moments and Moods") für Jazz-Fusion-Kachel + Hero
 assets/audio/           MP3-Dateien (siehe README dort für Status pro Track)
 supabase-content-setup.sql  SQL für die site_content-Tabelle + RLS (Text-Editor)
@@ -92,14 +92,19 @@ vier echte Tracks aus der Reihe **„Moments and Moods"**, mit demselben
 Streaming-Buttons). Konfiguriert im `JAZZ_TRACKS`-Array in
 `assets/js/jazz.js`:
 
-- Echo (`echo.mp3`)
-- Fading Light (`fading-light.mp3`)
-- Sunday Feeling (`sunday-feeling.mp3`)
-- End of Summer (`end-of-summer.mp3`)
+Titel und Reihenfolge stammen aus dem offiziellen "Moments and
+Moods"-Tracklisting-Screenshot:
 
-Titel wurden aus den hochgeladenen Dateinamen abgeleitet (Versions-Suffixe
-wie `_2`/`_3` entfernt) — kurz gegenprüfen, falls das nicht die
-gewünschten offiziellen Titel sind.
+1. Turning Point (Audiodatei: `echo.mp3`)
+2. End of Summer (Audiodatei: `end-of-summer.mp3`)
+3. Sunday Feeling (Audiodatei: `sunday-feeling.mp3`)
+4. Changing Moods (Audiodatei: `fading-light.mp3`)
+
+Die Audio-Dateinamen stammen noch aus dem ersten Upload (vor dem
+offiziellen Tracklisting) und wurden nicht umbenannt — zwei Titel
+(„Turning Point" für `echo.mp3`, „Changing Moods" für `fading-light.mp3`)
+waren per Ausschlussverfahren zugeordnet, nicht durch Anhören verifiziert.
+Kurz gegenprüfen, ob die Zuordnung stimmt.
 
 **Streaming-Links, ehrlich benannt:** Wie bei den EDM-Tracks bieten Apple
 Music und Spotify für HUK Fusion aktuell nur eine Artist-Seite an, keine
