@@ -78,11 +78,18 @@
 }
 .deck__playbtn:hover { transform: scale(1.04); }
 .deck__playbtn.is-playing { background: rgba(255, 255, 255, 0.12); color: var(--text); }
+.deck__playbtn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
 
 .deck__time {
   font-variant-numeric: tabular-nums;
   font-size: 0.78rem;
   color: var(--text-faint);
+}
+
+.deck__loading {
+  font-size: 0.72rem;
+  color: var(--text-faint);
+  font-style: italic;
 }
 
 .deck__progress {
@@ -114,6 +121,99 @@
   color: var(--text-faint);
   text-transform: uppercase;
   letter-spacing: 0.06em;
+}
+
+/* ---- FX row: Repeater, Scratch jog wheel, Sync ---- */
+
+.deck__fx {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--card-border);
+}
+
+.fx-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.fx-block label {
+  font-size: 0.68rem;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.fx-block__row { display: flex; gap: 0.4rem; align-items: center; }
+
+.fx-block select {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.75rem;
+  padding: 0.35rem 0.4rem;
+}
+
+.fx-hold-btn {
+  border: 1px solid var(--card-border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-dim);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  touch-action: none;
+}
+.fx-hold-btn.is-active {
+  background: var(--gradient-main);
+  color: #0b0b14;
+  border-color: transparent;
+}
+
+.jogwheel {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid var(--card-border);
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.08), transparent 60%);
+  position: relative;
+  cursor: grab;
+  touch-action: none;
+}
+.jogwheel.is-active { cursor: grabbing; border-color: var(--purple); }
+.jogwheel__marker {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 4px;
+  height: 12px;
+  border-radius: 2px;
+  background: var(--text-faint);
+  transform: translateX(-50%);
+}
+.jogwheel.is-active .jogwheel__marker { background: #ff2e92; }
+.deck--b .jogwheel.is-active .jogwheel__marker { background: #00e5ff; }
+
+.sync-btn {
+  border: 1px solid var(--card-border);
+  background: transparent;
+  color: var(--text-dim);
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.sync-btn:hover { border-color: var(--text-dim); }
+
+@media (max-width: 520px) {
+  .deck__fx { grid-template-columns: 1fr; }
 }
 .control input[type="range"] {
   width: 100%;

@@ -131,12 +131,38 @@ auf `edm.html`/`jazz.html`) gegeneinander mischen lassen:
 
 - **Deck A / Deck B:** je ein Dropdown mit allen 10 Tracks, Play/Pause,
   Fortschrittsanzeige
-- **Pro Deck:** Volume-Fader, Speed-Regler (±15 %, wie ein Pitch-Fader),
-  3-Band-EQ (Low/Mid/High, von „Kill" bis „Boost")
+- **Pro Deck:** Volume-Fader, Speed-Regler (0,5–1,5×, wie ein Pitch-Fader),
+  3-Band-EQ (Low/Mid/High, von „Kill" bis „Boost"), **Hall**-Regler
+  (Reverb-Send in einen gemeinsamen, synthetisch erzeugten Hall-Bus —
+  keine Audio-Datei nötig)
+- **Repeater** (pro Deck): Auswahl der Taktlänge (1/4, 1/8, 1/16), dann
+  Button gedrückt halten — loopt sample-genau diese Taktlänge ab der
+  aktuellen Position; loslassen springt zurück auf die Stelle, an der der
+  Track „eigentlich" gerade wäre (die reale Zeitachse läuft im
+  Hintergrund unbeeinflusst weiter, wie bei Logics Repeater/Freeze-Effekten)
+- **Scratch** (pro Deck): rundes Jog-Wheel, mit der Maus/Finger ziehen —
+  unterstützt echte Rückwärtswiedergabe (kein Trick, sondern per
+  `AudioBufferSourceNode` mit negativer `playbackRate`). Genau wie beim
+  Repeater kehrt der Track beim Loslassen zur echten, durchgehend
+  weiterlaufenden Position zurück
+- **Sync** (pro Deck): setzt die Geschwindigkeit dieses Decks so, dass
+  sein Tempo zum anderen Deck passt (`bpm_anderes × speed_anderes /
+  bpm_dieses`) — reiner Tempo-Sync, kein Beat-Grid-Alignment (das würde
+  eine Beat-Erkennungs-Analyse der Dateien voraussetzen, deutlich
+  aufwendiger)
 - **Crossfader** in der Mitte: blendet gleichmäßig-laut (Equal-Power)
   zwischen Deck A und B
 - **Master-Volume** + **Reset**-Button (setzt alle Regler zurück, stoppt
   beide Decks)
+
+**Technischer Umbau für die FX:** Die Decks liefen ursprünglich über
+`<audio>`-Elemente; für Repeater/Scratch (sample-genaues Loopen,
+Rückwärtswiedergabe) reicht das nicht — beides läuft jetzt über
+`AudioBufferSourceNode` (Track wird einmal komplett heruntergeladen und
+per `decodeAudioData` dekodiert, dann gecacht). Dadurch kurze
+„Loading…"-Anzeige beim ersten Laden eines Tracks; alle bisherigen
+Funktionen (Play/Pause/Volume/EQ/Speed/Crossfader) funktionieren
+unverändert, jetzt nur intern anders verdrahtet.
 
 **Bewusst nur Live-Wiedergabe, kein Export:** Es wird nichts aufgenommen,
 gespeichert oder hochgeladen — sobald die Seite verlassen wird, ist die

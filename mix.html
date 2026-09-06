@@ -40,7 +40,7 @@
   <div class="container mixlab-hero__inner">
     <span class="section__kicker">03 — Area</span>
     <h1>Mix Lab</h1>
-    <p>A virtual two-deck DJ mixer. Load any track from EDM Fusion or Jazz Fusion onto Deck A or B, blend them live with the crossfader, and shape each one with volume, a 3-band EQ, and speed — right here in the browser.</p>
+    <p>A virtual two-deck DJ mixer. Load any track from EDM Fusion or Jazz Fusion onto Deck A or B, blend them live with the crossfader, and shape each one with volume, a 3-band EQ, speed, a Hall reverb send, a hold-to-repeat effect, and a scratch jog wheel — right here in the browser.</p>
   </div>
 </section>
 
@@ -56,6 +56,7 @@
       <div class="deck__transport">
         <button type="button" class="deck__playbtn" id="deckAPlay">▶ Play</button>
         <span class="deck__time" id="deckATime">0:00 / 0:00</span>
+        <span class="deck__loading" id="deckALoading" hidden>Loading…</span>
       </div>
       <div class="deck__progress"><div class="deck__progress-fill" id="deckAMeter"></div></div>
 
@@ -66,7 +67,7 @@
         </div>
         <div class="control">
           <label for="deckASpeed">Speed</label>
-          <input type="range" id="deckASpeed" min="0.85" max="1.15" step="0.01" value="1" data-default="1" />
+          <input type="range" id="deckASpeed" min="0.5" max="1.5" step="0.01" value="1" data-default="1" />
         </div>
         <div class="control">
           <label for="deckALow">Low</label>
@@ -80,8 +81,35 @@
           <label for="deckAHigh">High</label>
           <input type="range" id="deckAHigh" min="0" max="2" step="0.05" value="1" data-default="1" />
         </div>
+        <div class="control">
+          <label for="deckAHall">Hall</label>
+          <input type="range" id="deckAHall" min="0" max="1" step="0.02" value="0" data-default="0" />
+        </div>
       </div>
-      <audio id="deckAAudio" preload="auto"></audio>
+
+      <div class="deck__fx">
+        <div class="fx-block">
+          <label>Repeater</label>
+          <div class="fx-block__row">
+            <select id="deckARepeatDiv" aria-label="Deck A repeater length">
+              <option value="0.25">1/4</option>
+              <option value="0.125" selected>1/8</option>
+              <option value="0.0625">1/16</option>
+            </select>
+            <button type="button" class="fx-hold-btn" id="deckARepeatBtn">Hold</button>
+          </div>
+        </div>
+        <div class="fx-block">
+          <label>Scratch</label>
+          <div class="jogwheel" id="deckAJog" aria-label="Deck A scratch jog wheel">
+            <div class="jogwheel__marker"></div>
+          </div>
+        </div>
+        <div class="fx-block">
+          <label>&nbsp;</label>
+          <button type="button" class="sync-btn" id="deckASync">Sync to B</button>
+        </div>
+      </div>
     </div>
 
     <!-- ---- MASTER / CROSSFADER ---- -->
@@ -106,6 +134,7 @@
       <div class="deck__transport">
         <button type="button" class="deck__playbtn" id="deckBPlay">▶ Play</button>
         <span class="deck__time" id="deckBTime">0:00 / 0:00</span>
+        <span class="deck__loading" id="deckBLoading" hidden>Loading…</span>
       </div>
       <div class="deck__progress"><div class="deck__progress-fill" id="deckBMeter"></div></div>
 
@@ -116,7 +145,7 @@
         </div>
         <div class="control">
           <label for="deckBSpeed">Speed</label>
-          <input type="range" id="deckBSpeed" min="0.85" max="1.15" step="0.01" value="1" data-default="1" />
+          <input type="range" id="deckBSpeed" min="0.5" max="1.5" step="0.01" value="1" data-default="1" />
         </div>
         <div class="control">
           <label for="deckBLow">Low</label>
@@ -130,13 +159,40 @@
           <label for="deckBHigh">High</label>
           <input type="range" id="deckBHigh" min="0" max="2" step="0.05" value="1" data-default="1" />
         </div>
+        <div class="control">
+          <label for="deckBHall">Hall</label>
+          <input type="range" id="deckBHall" min="0" max="1" step="0.02" value="0" data-default="0" />
+        </div>
       </div>
-      <audio id="deckBAudio" preload="auto"></audio>
+
+      <div class="deck__fx">
+        <div class="fx-block">
+          <label>Repeater</label>
+          <div class="fx-block__row">
+            <select id="deckBRepeatDiv" aria-label="Deck B repeater length">
+              <option value="0.25">1/4</option>
+              <option value="0.125" selected>1/8</option>
+              <option value="0.0625">1/16</option>
+            </select>
+            <button type="button" class="fx-hold-btn" id="deckBRepeatBtn">Hold</button>
+          </div>
+        </div>
+        <div class="fx-block">
+          <label>Scratch</label>
+          <div class="jogwheel" id="deckBJog" aria-label="Deck B scratch jog wheel">
+            <div class="jogwheel__marker"></div>
+          </div>
+        </div>
+        <div class="fx-block">
+          <label>&nbsp;</label>
+          <button type="button" class="sync-btn" id="deckBSync">Sync to A</button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<p class="mixlab-note">Live listening only — nothing you mix here is recorded, saved, or shared. Select a track on each deck, hit play on both, and use the crossfader in the middle to blend between them, just like a DJ mixer.</p>
+<p class="mixlab-note">Live listening only — nothing you mix here is recorded, saved, or shared. Select a track on each deck, hit play on both, and use the crossfader in the middle to blend between them. <strong>Repeater</strong>: hold the button to loop a small slice of the beat, release to snap back to where the track actually is. <strong>Scratch</strong>: drag the jog wheel left/right — it supports real reverse playback, like scratching a record. <strong>Sync</strong>: matches this deck's tempo to the other deck's (tempo only, not beat-aligned).</p>
 
 <!-- ============================== FOOTER ============================== -->
 <footer>
