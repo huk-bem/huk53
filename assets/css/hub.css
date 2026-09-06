@@ -100,9 +100,13 @@ html, body {
 
 .hub-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   border-top: 1px solid var(--hub-border);
   border-left: 1px solid var(--hub-border);
+}
+
+@media (max-width: 1000px) {
+  .hub-grid { grid-template-columns: 1fr 1fr; }
 }
 
 .hub-tile {

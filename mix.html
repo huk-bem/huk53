@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mix Lab — HUK</title>
+<meta name="description" content="Mix Lab: a virtual two-deck DJ mixer. Load any EDM Fusion or Jazz Fusion track onto Deck A or B, blend them with the crossfader, and shape each with volume, EQ, and speed — right in the browser." />
+<meta name="theme-color" content="#0b0b14" />
+
+<meta property="og:title" content="Mix Lab — HUK" />
+<meta property="og:description" content="A virtual two-deck DJ mixer for the EDM Fusion and Jazz Fusion tracks." />
+<meta property="og:type" content="website" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%230b0b14'/%3E%3Ctext x='50' y='66' font-size='46' font-family='Arial,sans-serif' font-weight='700' fill='%237b2ff7' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="assets/css/style.css" />
+<link rel="stylesheet" href="assets/css/mixer.css" />
+</head>
+<body>
+
+<!-- ============================== NAV ============================== -->
+<header class="nav" id="nav">
+  <a href="#top" class="nav__logo"><span class="dot" aria-hidden="true"></span>MIX LAB</a>
+  <nav class="nav__links" id="navLinks">
+    <a href="index.html">← Home</a>
+    <a href="edm.html">EDM Fusion</a>
+    <a href="jazz.html">Jazz Fusion</a>
+  </nav>
+  <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+    <span></span>
+  </button>
+</header>
+
+<!-- ============================== HERO ============================== -->
+<section class="mixlab-hero" id="top">
+  <div class="container mixlab-hero__inner">
+    <span class="section__kicker">03 — Area</span>
+    <h1>Mix Lab</h1>
+    <p>A virtual two-deck DJ mixer. Load any track from EDM Fusion or Jazz Fusion onto Deck A or B, blend them live with the crossfader, and shape each one with volume, a 3-band EQ, and speed — right here in the browser.</p>
+  </div>
+</section>
+
+<!-- ============================== MIXER ============================== -->
+<section class="container">
+  <div class="mixer">
+
+    <!-- ---- DECK A ---- -->
+    <div class="deck deck--a">
+      <span class="deck__label">Deck A</span>
+      <select id="deckASelect" aria-label="Deck A track"></select>
+
+      <div class="deck__transport">
+        <button type="button" class="deck__playbtn" id="deckAPlay">▶ Play</button>
+        <span class="deck__time" id="deckATime">0:00 / 0:00</span>
+      </div>
+      <div class="deck__progress"><div class="deck__progress-fill" id="deckAMeter"></div></div>
+
+      <div class="deck__controls">
+        <div class="control">
+          <label for="deckAVolume">Volume</label>
+          <input type="range" id="deckAVolume" min="0" max="1.3" step="0.01" value="1" data-default="1" />
+        </div>
+        <div class="control">
+          <label for="deckASpeed">Speed</label>
+          <input type="range" id="deckASpeed" min="0.85" max="1.15" step="0.01" value="1" data-default="1" />
+        </div>
+        <div class="control">
+          <label for="deckALow">Low</label>
+          <input type="range" id="deckALow" min="0" max="2" step="0.05" value="1" data-default="1" />
+        </div>
+        <div class="control">
+          <label for="deckAMid">Mid</label>
+          <input type="range" id="deckAMid" min="0" max="2" step="0.05" value="1" data-default="1" />
+        </div>
+        <div class="control">
+          <label for="deckAHigh">High</label>
+          <input type="range" id="deckAHigh" min="0" max="2" step="0.05" value="1" data-default="1" />
+        </div>
+      </div>
+      <audio id="deckAAudio" preload="auto"></audio>
+    </div>
+
+    <!-- ---- MASTER / CROSSFADER ---- -->
+    <div class="mixer__master">
+      <div class="crossfader-wrap">
+        <label for="crossfader">Crossfader</label>
+        <input type="range" id="crossfader" min="0" max="1" step="0.01" value="0.5" data-default="0.5" />
+        <div class="crossfader-ends"><span>A</span><span>B</span></div>
+      </div>
+      <div class="master-volume">
+        <label for="masterVolume">Master</label>
+        <input type="range" id="masterVolume" min="0" max="1.2" step="0.01" value="0.9" data-default="0.9" />
+      </div>
+      <button type="button" class="mixlab-reset" id="mixReset">Reset mixer</button>
+    </div>
+
+    <!-- ---- DECK B ---- -->
+    <div class="deck deck--b">
+      <span class="deck__label">Deck B</span>
+      <select id="deckBSelect" aria-label="Deck B track"></select>
+
+      <div class="deck__transport">
+        <button type="button" class="deck__playbtn" id="deckBPlay">▶ Play</button>
+        <span class="deck__time" id="deckBTime">0:00 / 0:00</span>
+      </div>
+      <div class="deck__progress"><div class="deck__progress-fill" id="deckBMeter"></div></div>
+
+      <div class="deck__controls">
+        <div class="control">
+          <label for="deckBVolume">Volume</label>
+          <input type="range" id="deckBVolume" min="0" max="1.3" step="0.01" value="1" data-default="1" />
+        </div>
+        <div class="control">
+          <label for="deckBSpeed">Speed</label>
+          <input type="range" id="deckBSpeed" min="0.85" max="1.15" step="0.01" value="1" data-default="1" />
+        </div>
+        <div class="control">
+          <label for="deckBLow">Low</label>
+          <input type="range" id="deckBLow" min="0" max="2" step="0.05" value="1" data-default="1" />
+        </div>
+        <div class="control">
+          <label for="deckBMid">Mid</label>
+          <input type="range" id="deckBMid" min="0" max="2" step="0.05" value="1" data-default="1" />
+        </div>
+        <div class="control">
+          <label for="deckBHigh">High</label>
+          <input type="range" id="deckBHigh" min="0" max="2" step="0.05" value="1" data-default="1" />
+        </div>
+      </div>
+      <audio id="deckBAudio" preload="auto"></audio>
+    </div>
+  </div>
+</section>
+
+<p class="mixlab-note">Live listening only — nothing you mix here is recorded, saved, or shared. Select a track on each deck, hit play on both, and use the crossfader in the middle to blend between them, just like a DJ mixer.</p>
+
+<!-- ============================== FOOTER ============================== -->
+<footer>
+  <div class="container footer__row">
+    <span class="footer__logo">MIX LAB</span>
+    <small>© <span id="year"></span> HUK</small>
+    <nav class="footer__legal">
+      <a href="datenschutz.html">Privacy Policy</a>
+      <a href="impressum.html">Legal Notice</a>
+    </nav>
+    <a href="#top" class="back-to-top">↑ back to top</a>
+  </div>
+</footer>
+
+<script src="assets/js/mixer.js"></script>
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+  const nav = document.getElementById("nav");
+  const navBurger = document.getElementById("navBurger");
+  const navLinks = document.getElementById("navLinks");
+  navBurger?.addEventListener("click", () => {
+    const isOpen = nav.classList.toggle("is-open");
+    navBurger.setAttribute("aria-expanded", String(isOpen));
+  });
+  navLinks?.querySelectorAll("a").forEach((a) => {
+    a.addEventListener("click", () => { nav.classList.remove("is-open"); navBurger?.setAttribute("aria-expanded", "false"); });
+  });
+</script>
+</body>
+</html>

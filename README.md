@@ -26,22 +26,25 @@ zurückführen.
 ## Struktur
 
 ```
-index.html              Startseite — kühle Verteilerseite (Hub) für EDM/Jazz Fusion
+index.html              Startseite — kühle Verteilerseite (Hub) für EDM/Jazz Fusion/Mix Lab
 edm.html                 EDM-Unterseite — Player, Songs, Likes/Kommentare, Studio-Info
 jazz.html                Jazz-Fusion-Unterseite — Player, vier "Moments and Moods"-Tracks
+mix.html                Mix Lab — virtuelles 2-Kanal-DJ-Mischpult, siehe unten
 admin.html              Text-Editor für Marketing-Texte (Magic-Link-Login, siehe unten)
 impressum.html          Legal Notice (Impressum)
 datenschutz.html        Privacy Policy (Datenschutzerklärung)
 assets/css/hub.css      Design der Startseite + Impressum/Datenschutz + admin.html (schwarz-weiß, dezent)
-assets/css/style.css    Design der EDM-Seite (Dark/Neon, wie bisher) — auch von jazz.html genutzt
+assets/css/style.css    Design der EDM-Seite (Dark/Neon, wie bisher) — auch von jazz.html/mix.html genutzt
 assets/css/intro.css    Zusatzstyles für Intro-Modus (nur auf edm.html)
 assets/css/consent.css  Zusatzstyles für den Cookie-Consent-Banner (nur auf edm.html)
 assets/css/jazz.css     Zusatzstyles für die Jazz-Fusion-Seite (Gold-Akzent, Hero mit Cover)
+assets/css/mixer.css    Zusatzstyles für Mix Lab (Decks, Crossfader, EQ-Regler)
 assets/js/main.js       Gemeinsame Basis (Nav, Hero-Canvas) + EDM: Player, Likes/Kommentare (Supabase)
 assets/js/consent.js    Cookie-Banner + Supabase-Client + Besuchskennung (nur auf edm.html)
 assets/js/content.js    Lädt Marketing-Text-Overrides aus Supabase (index/edm/jazz.html)
 assets/js/intro.js      Intro-Modus: Hintergrund-Motiv + Autoplay-Soundtrack (nur auf edm.html)
 assets/js/jazz.js       Jazz-Fusion-Player (4 Tracks, 30s-Vorschau + Streaming-Buttons)
+assets/js/mixer.js      Mix Lab: Web-Audio-Mischpult-Logik (2 Decks, Crossfader, EQ, Speed)
 assets/img/edm-teaser.jpg   Cover-Motiv ("FUSION EDM") für die EDM-Kachel auf der Startseite
 assets/img/jazz-teaser.jpg  Cover-Motiv ("Moments and Moods") für Jazz-Fusion-Kachel + Hero
 assets/audio/           MP3-Dateien (siehe README dort für Status pro Track)
@@ -118,6 +121,34 @@ Keine Likes/Kommentare auf dieser Seite (bewusst wie ursprünglich
 geplant, kein Supabase/Cookie nötig) — nur Player + Streaming-Buttons.
 Das Cover-Motiv „Moments and Moods" erscheint jetzt im Hero neben dem
 Text.
+
+## Mix Lab (`mix.html`) — virtuelles DJ-Mischpult
+
+Dritter Hub-Bereich: ein 2-Kanal-Mischpult direkt im Browser (Web Audio
+API, `assets/js/mixer.js`), mit dem sich beliebige Tracks aus **beiden**
+Katalogen (6× EDM Fusion + 4× Jazz Fusion, alle real, alle bereits live
+auf `edm.html`/`jazz.html`) gegeneinander mischen lassen:
+
+- **Deck A / Deck B:** je ein Dropdown mit allen 10 Tracks, Play/Pause,
+  Fortschrittsanzeige
+- **Pro Deck:** Volume-Fader, Speed-Regler (±15 %, wie ein Pitch-Fader),
+  3-Band-EQ (Low/Mid/High, von „Kill" bis „Boost")
+- **Crossfader** in der Mitte: blendet gleichmäßig-laut (Equal-Power)
+  zwischen Deck A und B
+- **Master-Volume** + **Reset**-Button (setzt alle Regler zurück, stoppt
+  beide Decks)
+
+**Bewusst nur Live-Wiedergabe, kein Export:** Es wird nichts aufgenommen,
+gespeichert oder hochgeladen — sobald die Seite verlassen wird, ist die
+Mischung weg. Das war meine Auslegung der ursprünglichen Anfrage („…ein
+Sound entsteht, der ausgegeben wird" = live über die Lautsprecher, nicht
+als Datei). Soll stattdessen eine aufnehmbare/exportierbare Mischung her
+(z. B. als WAV-Download), einfach Bescheid geben — technisch machbar über
+`MediaRecorder` auf dem Audio-Graph, aber ein spürbar größerer Umbau.
+
+Kein eigenes Teaser-Bild vorhanden — die Hub-Kachel zeigt stattdessen eine
+kleine, selbst gebaute SVG-Grafik (Fader-Symbole), passend zum
+minimalistischen Look der Startseite.
 
 ## Intro-Modus (nur auf der EDM-Seite)
 

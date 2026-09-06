@@ -34,6 +34,8 @@ insert into site_content (key, value) values
   ('hub.edm.cta', 'Listen to the tracks →'),
   ('hub.jazz.teaser', 'Jazz harmony meets electronic texture — four tracks from the Moments and Moods release. Press play, then follow through to Spotify and Apple Music.'),
   ('hub.jazz.cta', 'Listen to the tracks →'),
+  ('hub.mix.teaser', 'A virtual two-deck DJ mixer — load an EDM Fusion and a Jazz Fusion track side by side, blend them with the crossfader, and shape each with volume, EQ, and speed.'),
+  ('hub.mix.cta', 'Open the mixer →'),
   ('edm.hero.tagline', 'Dance and EDM productions from the HUK53 studio — with crossover and fusion elements.'),
   ('edm.hero.cta', '🎧 Listen to tracks'),
   ('edm.songs.heading', 'Fresh tracks from the studio.'),
