@@ -199,6 +199,19 @@
     },
   ];
 
+  // If the Supabase CDN script failed to load (blocked by a content
+  // blocker, offline, network hiccup), fail loudly instead of silently —
+  // without this guard, nothing below ever runs and every button on the
+  // page looks broken with zero feedback.
+  if (!window.supabase) {
+    document.getElementById("loginCard").hidden = false;
+    document.getElementById("loginStatus").innerHTML =
+      '<div class="admin-status admin-status--err">Could not load the required library from cdn.jsdelivr.net. ' +
+      "Try reloading the page, or disable any ad/content blocker for this site and reload.</div>";
+    document.getElementById("loginBtn").disabled = true;
+    throw new Error("window.supabase not available — aborting admin.html init");
+  }
+
   const supa = window.supabase.createClient(window.HUK53_SUPABASE_URL, window.HUK53_SUPABASE_ANON_KEY);
 
   const loginCard = document.getElementById("loginCard");
@@ -217,7 +230,10 @@
 
   document.getElementById("loginBtn").addEventListener("click", async () => {
     const email = document.getElementById("loginEmail").value.trim();
-    if (!email) return;
+    if (!email) {
+      showStatus(loginStatus, "Please type your email address first — the greyed-out text is only a placeholder, not an entered value.", false);
+      return;
+    }
     loginStatus.innerHTML = "";
     try {
       const { error } = await supa.auth.signInWithOtp({
